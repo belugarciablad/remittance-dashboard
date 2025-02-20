@@ -1,13 +1,15 @@
 <script lang="ts">
   import { transactions } from "../store/transactions";
-  import type { Transaction } from "../store/transactions";
+  import type { Transaction, TransactionStatus } from "../store/transactions";
   import TransactionDetail from './TransactionDetail.svelte';
   import SearchBar from './SearchBar.svelte';
+  import Filter from './Filter.svelte'
 
   let isDetailModalOpen: boolean = false;
   let selectedTransaction: Transaction | null = null;
   let searchQuery: string = '';
-  let searchedTransactions = $transactions;
+  let selectedStatuses: TransactionStatus[] = [];
+  let filteredTransactions = $transactions;
 
     const openDetailModal = (transaction: Transaction) => {
         isDetailModalOpen = true;
@@ -20,16 +22,24 @@
 
     const updateSearchQuery = (query: string) => {
         searchQuery = query;
-        searchTransactions()
+        filterTransactions()
     };
 
-    const searchTransactions = () => {
-        searchedTransactions = $transactions.filter((transaction: Transaction) => {
+    const updateStatusCheckbox = (statuses: TransactionStatus[]) => {
+        selectedStatuses = statuses;
+        filterTransactions();
+    }
+
+    const filterTransactions = () => {
+        filteredTransactions = $transactions.filter((transaction: Transaction) => {
         const query = searchQuery.toLowerCase();
+        const isStatusMatch = selectedStatuses.includes(transaction.status.toLowerCase());
+
         const isMatch = (
             transaction.transaction_id.toString().toLowerCase().includes(query) ||
             transaction.sender_whatsapp.toLowerCase().includes(query) ||
-            transaction.receiver_whatsapp.toLowerCase().includes(query)
+            transaction.receiver_whatsapp.toLowerCase().includes(query) ||
+            isStatusMatch
         );
         return isMatch;
         });
@@ -40,6 +50,11 @@
     {searchQuery}
     updateSearchQuery={updateSearchQuery}
 />
+<Filter 
+    {selectedStatuses} 
+    updateStatusCheckbox={updateStatusCheckbox}
+/>
+
 <table class="min-w-full table-auto border-collapse">
 <thead>
     <tr class="bg-gray-200">
@@ -55,7 +70,7 @@
     </tr>
 </thead>
 <tbody>
-    {#each searchedTransactions as transaction (transaction.transaction_id)}
+    {#each filteredTransactions as transaction (transaction.transaction_id)}
     <tr class="odd:bg-white even:bg-gray-50" on:click={() => openDetailModal(transaction)}>
         <td class="px-4 py-2 border">{transaction.transaction_id}</td>
         <td class="px-4 py-2 border">{transaction.sender_whatsapp}</td>
