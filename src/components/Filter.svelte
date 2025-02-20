@@ -1,51 +1,34 @@
 <script lang="ts">
-    import type {TransactionStatus} from '../store/transactions'
+    import {TransactionStatus} from '../store/transactions'
     export let selectedStatuses: string[] = [];
     export let updateStatusCheckbox: (statuses: string[]) => void; 
+
+    const availableStatuses = ['All', ...Object.values(TransactionStatus)];
   
-    const isSelected = (status: string) => selectedStatuses.includes(status);
+    const isSelected = (status: string) => (status === "All") ? areAllSelected() : selectedStatuses.includes(status);
+
   
     const toggleStatus = (status: string) => {
-      if (selectedStatuses.includes(status)) {
-        selectedStatuses = selectedStatuses.filter(s => s !== status);
-      } else {
-        selectedStatuses = [...selectedStatuses, status];
-      }
-      updateStatusCheckbox(selectedStatuses);
+        if (status === 'All') {
+            selectedStatuses = areAllSelected() ? [] : availableStatuses.slice(1);
+        } else {
+            selectedStatuses = isSelected(status) ? selectedStatuses.filter(s => s !== status) : [...selectedStatuses, status]
+        }
+        updateStatusCheckbox(selectedStatuses);
     };
-  </script>
-  
-  <div class="flex space-x-4">
-    <label>
-      <input 
-        type="checkbox" 
-        checked={isSelected('Completed')}
-        on:change={() => toggleStatus('Completed')} />
-      Completed
-    </label>
-  
-    <label>
-      <input 
-        type="checkbox" 
-        checked={isSelected('Pending')}
-        on:change={() => toggleStatus('Pending')} />
-      Pending
-    </label>
-  
-    <label>
-      <input 
-        type="checkbox" 
-        checked={isSelected('In Progress')}
-        on:change={() => toggleStatus('In Progress')} />
-      In progress
-    </label>
 
-    <label>
+    const areAllSelected = () =>  selectedStatuses.length === availableStatuses.length - 1;
+</script>
+  
+<div class="flex space-x-4">
+    {#each availableStatuses as status}
+      <label>
         <input 
           type="checkbox" 
-          checked={isSelected('Failed')}
-          on:change={() => toggleStatus('Failed')} />
-        Failed
+          checked={isSelected(status)}
+          on:change={() => toggleStatus(status)} />
+        {status}
       </label>
-  </div>
+    {/each}
+</div>
   

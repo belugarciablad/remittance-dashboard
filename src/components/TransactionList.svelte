@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { transactions } from "../store/transactions";
-  import type { Transaction, TransactionStatus } from "../store/transactions";
+  import { transactions, TransactionStatus } from "../store/transactions";
+  import type { Transaction } from "../store/transactions";
   import TransactionDetail from './TransactionDetail.svelte';
   import SearchBar from './SearchBar.svelte';
   import Filter from './Filter.svelte'
@@ -8,7 +8,7 @@
   let isDetailModalOpen: boolean = false;
   let selectedTransaction: Transaction | null = null;
   let searchQuery: string = '';
-  let selectedStatuses: TransactionStatus[] = [];
+  let selectedStatuses: TransactionStatus[] = Object.values(TransactionStatus);
   let filteredTransactions = $transactions;
 
     const openDetailModal = (transaction: Transaction) => {
@@ -33,12 +33,11 @@
     const filterTransactions = () => {
         filteredTransactions = $transactions.filter((transaction: Transaction) => {
         const query = searchQuery.toLowerCase();
-        const isStatusMatch = selectedStatuses.includes(transaction.status.toLowerCase());
-
+        const isStatusMatch = selectedStatuses.includes(transaction.status);
         const isMatch = (
-            transaction.transaction_id.toString().toLowerCase().includes(query) ||
+            (transaction.transaction_id.toString().toLowerCase().includes(query) ||
             transaction.sender_whatsapp.toLowerCase().includes(query) ||
-            transaction.receiver_whatsapp.toLowerCase().includes(query) ||
+            transaction.receiver_whatsapp.toLowerCase().includes(query)) &&
             isStatusMatch
         );
         return isMatch;
