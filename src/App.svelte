@@ -1,47 +1,33 @@
-<script>
-  import svelteLogo from './assets/svelte.svg'
-  import viteLogo from '/vite.svg'
-  import Counter from './lib/Counter.svelte'
+<script lang="ts">
+  import TransactionList from './components/TransactionList.svelte';
 </script>
 
-<main>
-  <div>
-    <a href="https://vite.dev" target="_blank" rel="noreferrer">
-      <img src={viteLogo} class="logo" alt="Vite Logo" />
-    </a>
-    <a href="https://svelte.dev" target="_blank" rel="noreferrer">
-      <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
-    </a>
-  </div>
-  <h1>Vite + Svelte</h1>
+<!-- Main container for the dashboard -->
+<div class="min-h-screen bg-gray-100 flex flex-col">
 
-  <div class="card">
-    <Counter />
-  </div>
+  <!-- Header -->
+  <header class="bg-blue-600 text-white p-4">
+    <h1 class="text-3xl font-bold">Dashboard de Remesas</h1>
+  </header>
 
-  <p>
-    Check out <a href="https://github.com/sveltejs/kit#readme" target="_blank" rel="noreferrer">SvelteKit</a>, the official Svelte app framework powered by Vite!
-  </p>
+  <!-- Main content area -->
+  <main class="flex-grow p-6">
+    <div class="max-w-7xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+      <h2 class="text-2xl font-semibold mb-4">Transacciones</h2>
+      
+      <!-- Filters or search bar (Optional) -->
+      <div class="mb-4">
+        <input type="text" placeholder="Buscar transacción..." class="p-2 border rounded-md w-full max-w-xs" />
+      </div>
 
-  <p class="read-the-docs">
-    Click on the Vite and Svelte logos to learn more
-  </p>
-</main>
+      <!-- Transaction List -->
+      <TransactionList />
+    </div>
+  </main>
 
-<style>
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
-  }
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-  }
-  .logo.svelte:hover {
-    filter: drop-shadow(0 0 2em #ff3e00aa);
-  }
-  .read-the-docs {
-    color: #888;
-  }
-</style>
+  <!-- Footer -->
+  <footer class="bg-blue-600 text-white p-4 text-center">
+    <p> 2025 Remittance Dashboard. Todos los derechos reservados.</p>
+  </footer>
+
+</div>
