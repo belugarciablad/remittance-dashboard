@@ -15,11 +15,6 @@
     <div class="max-w-7xl mx-auto bg-white p-6 rounded-lg shadow-lg">
       <h2 class="text-2xl font-semibold mb-4">Transacciones</h2>
       
-      <!-- Filters or search bar (Optional) -->
-      <div class="mb-4">
-        <input type="text" placeholder="Buscar transacción..." class="p-2 border rounded-md w-full max-w-xs" />
-      </div>
-
       <!-- Transaction List -->
       <TransactionList />
     </div>
