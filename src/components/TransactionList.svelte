@@ -1,6 +1,19 @@
 <script lang="ts">
   import { transactions } from "../store/transactions";
   import type { Transaction } from "../store/transactions";
+  import TransactionDetail from './TransactionDetail.svelte';
+  let isDetailModalOpen = false;
+  let selectedTransaction: Transaction | null = null;
+
+
+    const openDetailModal = (transaction: Transaction) => {
+        isDetailModalOpen = true;
+        selectedTransaction = transaction;
+    }
+    const closeDetailModal = () => {
+        isDetailModalOpen = false;
+        selectedTransaction = null;
+    };
 </script>
 
   
@@ -20,7 +33,7 @@
 </thead>
 <tbody>
     {#each $transactions as transaction (transaction.transaction_id)}
-    <tr class="odd:bg-white even:bg-gray-50">
+    <tr class="odd:bg-white even:bg-gray-50" on:click={() => openDetailModal(transaction)}>
         <td class="px-4 py-2 border">{transaction.transaction_id}</td>
         <td class="px-4 py-2 border">{transaction.sender_whatsapp}</td>
         <td class="px-4 py-2 border">{transaction.receiver_whatsapp}</td>
@@ -34,4 +47,10 @@
     {/each}
 </tbody>
 </table>
+
+<TransactionDetail 
+    {isDetailModalOpen} 
+    {selectedTransaction}
+    closeModal={closeDetailModal}
+/>
   
