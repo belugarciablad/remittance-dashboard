@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {TransactionStatus} from '../store/transactions';
+    import {TransactionStatus} from "../types/transaction-model";
     import {DateRangesEnum} from '../types/date-ranges-type';
 
     export let selectedStatuses: string[] = [];

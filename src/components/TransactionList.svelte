@@ -1,6 +1,8 @@
 <script lang="ts">
-  import { transactions, TransactionStatus } from "../store/transactions";
-  import type { Transaction } from "../store/transactions";
+  import { transactions } from "../store/transactions";
+  import type { Transaction } from "../types/transaction-model";
+  import { TransactionStatus } from "../types/transaction-model";
+  import { currentPage, itemsPerPage } from "../store/table-pagination-config";
   import { DateRangesEnum } from '../types/date-ranges-type';
   import { getStartOfWeek, filterDate } from '../util/date-util';
   import { getColorByStatus } from '../util/status-color-util';
@@ -17,9 +19,7 @@
   let filteredTransactions = $transactions;
   let paginatedTransactions = [];
 
-  let currentPage = 1;
-  let itemsPerPage = 3;
-  $: totalPages = Math.ceil(filteredTransactions.length / itemsPerPage);
+  $: totalPages = Math.max(1, Math.ceil(filteredTransactions.length / itemsPerPage));
 
   let dateRangeFilter = DateRangesEnum.All
 
@@ -48,7 +48,7 @@
     }
 
     const applyAllFilters = () => {
-        currentPage = 1;
+        $currentPage = 1;
         filteredTransactions = $transactions.filter((transaction: Transaction) => {
             const query = searchQuery.toLowerCase();
             const matchesSearch = searchQuery === '' || (
@@ -67,7 +67,7 @@
     };
   
     const removeAllFilters = () => {
-        currentPage = 1;
+        $currentPage = 1;
         filteredTransactions = $transactions;
         searchQuery = '';
         dateRangeFilter = DateRangesEnum.All;
@@ -81,16 +81,18 @@
     };
 
   
-    const goToPage = (page:number) => {
-        currentPage = page;
+    const goToPage = (page: number) => {
+        $currentPage = page;
     }
     
     $: {
-        const start = (currentPage - 1) * itemsPerPage;
-        const end = itemsPerPage + start;
-
-        paginatedTransactions = filteredTransactions.slice(start,end);
-        console.log(paginatedTransactions);
+        const start = ($currentPage - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+        paginatedTransactions = filteredTransactions.slice(start, end);
+        
+        if ($currentPage > totalPages) {
+            $currentPage = totalPages;
+        }
     }
 
 </script>

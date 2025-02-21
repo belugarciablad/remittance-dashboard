@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { Transaction } from '../store/transactions'
+    import type { Transaction } from "../types/transaction-model";
     export let isDetailModalOpen = false;
     export let selectedTransaction: Transaction | null = null;
     export let closeModal: () => void;

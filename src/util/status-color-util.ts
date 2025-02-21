@@ -1,4 +1,4 @@
-import {TransactionStatus} from '../store/transactions'
+import {TransactionStatus} from "../types/transaction-model";
 
 const statusColors: Record<TransactionStatus, string> = {
     [TransactionStatus.Completed]: 'bg-green-100',
