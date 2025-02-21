@@ -3,6 +3,7 @@
   import type { Transaction } from "../store/transactions";
   import { DateRangesEnum } from '../types/date-ranges-type';
   import { getStartOfWeek, filterDate } from '../util/date-util';
+  import { getColorByStatus } from '../util/status-color-util';
   import TransactionDetail from './TransactionDetail.svelte';
   import SearchBar from './SearchBar.svelte';
   import Filter from './Filter.svelte'
@@ -111,7 +112,11 @@
         <td class="px-4 py-2 border">{transaction.amount_sent}</td>
         <td class="px-4 py-2 border">{transaction.amount_received}</td>
         <td class="px-4 py-2 border">{transaction.exchange_rate}</td>
-        <td class="px-4 py-2 border">{transaction.status}</td>
+        <td class="px-4 py-2 border"> 
+            <span class="w-20 h-8 text-sm rounded-md flex items-center justify-center {getColorByStatus(transaction.status)}">
+                {transaction.status}
+            </span>
+        </td>
         <td class="px-4 py-2 border">{transaction.payment_method}</td>
         <td class="px-4 py-2 border">{new Date(transaction.date).toLocaleString()}</td>
     </tr>
