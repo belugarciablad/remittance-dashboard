@@ -18,7 +18,6 @@
       <TransactionList />
     </div>
   </main>
-
   <!-- Footer -->
   <footer class="bg-blue-600 text-white p-4 text-center">
     <p>2025 Remittance Dashboard. Todos los derechos reservados.</p>

@@ -7,4 +7,14 @@ export default defineConfig({
   css: {
     postcss: './postcss.config.cjs',
   },
+  test: {
+    include: ['tests/**/*.{test,spec}.{js,ts}'],
+    environment: 'jsdom',
+    globals: true,
+  },
+  resolve: process.env.VITEST
+		? {
+				conditions: ['browser']
+			}
+		: undefined
 });

@@ -24,6 +24,7 @@
       <button
         class="absolute top-3 right-3 text-red-600 hover:text-red-800 text-xl font-bold"
         on:click={closeModal}
+        name="close"
         aria-label="Close modal"
       >
         ✖
