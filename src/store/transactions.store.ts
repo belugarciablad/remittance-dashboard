@@ -1,6 +1,6 @@
 import { writable } from "svelte/store";
-import type {Transaction} from '../types/transaction-model'
-import { TransactionStatus, PaymentMethod } from '../types/transaction-model'
+import type {Transaction} from '../types/transaction-model.type'
+import { TransactionStatus, PaymentMethod } from '../types/transaction-model.type'
 
 export const transactions = writable<Transaction[]>([
   {

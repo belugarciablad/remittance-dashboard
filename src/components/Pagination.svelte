@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { currentPage } from '../store/table-pagination-config';
+    import { currentPage } from '../store/table-pagination-config.store';
     export let totalPages: number;
     export let goToPage: (page: number) => void;
 </script>

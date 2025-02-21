@@ -13,7 +13,11 @@
     "@tsconfig/svelte": "^5.0.4",
     "@types/node": "^22.13.4",
     "autoprefixer": "^10.4.20",
+    "eslint": "^9.20.1",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-svelte": "^2.46.1",
     "postcss": "^8.5.3",
+    "prettier": "^3.5.1",
     "sass": "^1.85.0",
     "svelte": "^5.19.6",
     "svelte-check": "^4.1.4",
@@ -22,6 +26,7 @@
     "vite": "^6.1.0"
   },
   "dependencies": {
+    "jspdf": "^3.0.0",
     "lucide-svelte": "^0.475.0"
   }
 }
