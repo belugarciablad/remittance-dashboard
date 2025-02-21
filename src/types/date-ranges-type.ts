@@ -4,5 +4,5 @@ export enum DateRangesEnum  {
     ThisWeek = 'This week',
     ThisMonth = 'This month', 
     ThisYear = 'This year',
-    All = 'All'
+    All = 'All history'
 }

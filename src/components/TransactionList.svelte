@@ -10,7 +10,7 @@
   let isDetailModalOpen: boolean = false;
   let selectedTransaction: Transaction | null = null;
   let searchQuery: string = '';
-  let selectedStatuses: TransactionStatus[] = Object.values(TransactionStatus);
+  let selectedStatuses: TransactionStatus[] = [];
   let filteredTransactions = $transactions;
 
   let dateRangeFilter = DateRangesEnum.All
@@ -48,7 +48,7 @@
                 transaction.receiver_whatsapp.toLowerCase().includes(query)
             );
 
-            const matchesStatus = selectedStatuses.includes(transaction.status);
+            const matchesStatus = selectedStatuses.length === 0 || selectedStatuses.includes(transaction.status);
 
             const transactionDate = new Date(transaction.date);
             const matchesDate = filterDate(transactionDate, dateRangeFilter);
@@ -57,13 +57,30 @@
         });
     };
   
+    const removeAllFilters = () => {
+        filteredTransactions = $transactions;
+        searchQuery = '';
+        dateRangeFilter = DateRangesEnum.All;
+        selectedStatuses = [];
+    }
 
 </script>
 
-<SearchBar
-    {searchQuery}
-    updateSearchQuery={updateSearchQuery}
-/>
+<div class="flex w-full justify-between items-start gap-3">
+    <div class="flex-grow">
+        <SearchBar
+            {searchQuery}
+            updateSearchQuery={updateSearchQuery}
+        />
+    </div>
+    <button 
+        on:click={removeAllFilters}
+        class="px-3 py-1.5 h-10 w-auto text-sm text-gray-600 hover:text-white bg-gray-200 hover:bg-gray-400 border border-gray-300 rounded-md shadow-sm transition-colors duration-200 ease-in-out"
+        aria-label="Clear all filters">
+        Clear filters
+    </button>
+</div>
+
 <Filter 
     {selectedStatuses} 
     {dateRangeFilter}
