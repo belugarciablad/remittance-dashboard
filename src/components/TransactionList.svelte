@@ -7,6 +7,7 @@
   import TransactionDetail from './TransactionDetail.svelte';
   import SearchBar from './SearchBar.svelte';
   import Filter from './Filter.svelte';
+  import Pagination from './Pagination.svelte';
   import { Clipboard } from 'lucide-svelte';
 
   let isDetailModalOpen: boolean = false;
@@ -14,6 +15,11 @@
   let searchQuery: string = '';
   let selectedStatuses: TransactionStatus[] = [];
   let filteredTransactions = $transactions;
+  let paginatedTransactions = [];
+
+  let currentPage = 1;
+  let itemsPerPage = 3;
+  $: totalPages = Math.ceil(filteredTransactions.length / itemsPerPage);
 
   let dateRangeFilter = DateRangesEnum.All
 
@@ -42,6 +48,7 @@
     }
 
     const applyAllFilters = () => {
+        currentPage = 1;
         filteredTransactions = $transactions.filter((transaction: Transaction) => {
             const query = searchQuery.toLowerCase();
             const matchesSearch = searchQuery === '' || (
@@ -60,6 +67,7 @@
     };
   
     const removeAllFilters = () => {
+        currentPage = 1;
         filteredTransactions = $transactions;
         searchQuery = '';
         dateRangeFilter = DateRangesEnum.All;
@@ -71,6 +79,19 @@
         event.stopPropagation();
         navigator.clipboard.writeText(text);
     };
+
+  
+    const goToPage = (page:number) => {
+        currentPage = page;
+    }
+    
+    $: {
+        const start = (currentPage - 1) * itemsPerPage;
+        const end = itemsPerPage + start;
+
+        paginatedTransactions = filteredTransactions.slice(start,end);
+        console.log(paginatedTransactions);
+    }
 
 </script>
 
@@ -96,6 +117,12 @@
     updateDateRangeFilter={updateDateRangeFilter}
 />
 
+<TransactionDetail 
+    {isDetailModalOpen} 
+    {selectedTransaction}
+    closeModal={closeDetailModal}
+/>
+
 <table class="min-w-full table-auto border-collapse">
 <thead>
     <tr class="bg-gray-200">
@@ -111,7 +138,7 @@
     </tr>
 </thead>
 <tbody>
-    {#each filteredTransactions as transaction (transaction.transaction_id)}
+    {#each paginatedTransactions as transaction (transaction.transaction_id)}
     <tr class="odd:bg-white even:bg-gray-50" on:click={() => openDetailModal(transaction)}>
         <td class="px-4 py-2 border">
             <div class="flex items-center space-x-2">
@@ -142,9 +169,9 @@
 </tbody>
 </table>
 
-<TransactionDetail 
-    {isDetailModalOpen} 
-    {selectedTransaction}
-    closeModal={closeDetailModal}
+<Pagination
+    {currentPage}
+    {totalPages}
+    goToPage={goToPage}
 />
   
