@@ -8,6 +8,8 @@ export interface Transaction {
   status: TransactionStatus;
   payment_method: PaymentMethod;
   date: string;
+  currency_sent: string;
+  currency_received: string;
 }
 
 export enum TransactionStatus {

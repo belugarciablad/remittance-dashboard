@@ -56,10 +56,15 @@
             {formatPhoneNumber(selectedTransaction.receiver_whatsapp)}
           </p>
           <p><strong>Method:</strong> {selectedTransaction.payment_method}</p>
-          <p><strong>Amount Sent:</strong> {selectedTransaction.amount_sent}</p>
-          <p>
-            <strong>Amount Received:</strong>
-            {selectedTransaction.amount_received}
+          <p><strong>Amount Sent:</strong>
+             {selectedTransaction.amount_sent}
+
+             {selectedTransaction.currency_sent}
+          </p>
+          <p><strong>Amount Received:</strong>
+              {selectedTransaction.amount_received}
+
+              {selectedTransaction.currency_received}
           </p>
           <p><strong>Exchange:</strong> {selectedTransaction.exchange_rate}</p>
         </div>
