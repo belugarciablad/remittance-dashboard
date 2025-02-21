@@ -47,5 +47,38 @@ export const transactions = writable<Transaction[]>([
     status: TransactionStatus.Completed,
     payment_method: PaymentMethod.CashPickup,
     date: "2024-01-15T14:45:00Z"
+  },
+  {
+    transaction_id: "FXP123458",
+    sender_whatsapp: "+12025550123",
+    receiver_whatsapp: "+50255512345",
+    amount_sent: 300,
+    exchange_rate: 19.5,
+    amount_received: 5850,
+    status: TransactionStatus.Pending,
+    payment_method: PaymentMethod.BankDeposit,
+    date: "2025-01-15T14:45:00Z"
+  },
+  {
+    transaction_id: "FXP123459",
+    sender_whatsapp: "+12025550123",
+    receiver_whatsapp: "+50255512345",
+    amount_sent: 300,
+    exchange_rate: 19.5,
+    amount_received: 5850,
+    status: TransactionStatus.Failed,
+    payment_method: PaymentMethod.CashPickup,
+    date: "2025-02-18T14:45:00Z"
+  },
+  {
+    transaction_id: "FXP1234560",
+    sender_whatsapp: "+12025550123",
+    receiver_whatsapp: "+50255512345",
+    amount_sent: 300,
+    exchange_rate: 19.5,
+    amount_received: 5850,
+    status: TransactionStatus.InProgress,
+    payment_method: PaymentMethod.MobileWallet,
+    date: "2025-02-20T14:45:00Z"
   }
 ]);

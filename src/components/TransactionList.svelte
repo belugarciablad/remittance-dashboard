@@ -1,6 +1,8 @@
 <script lang="ts">
   import { transactions, TransactionStatus } from "../store/transactions";
   import type { Transaction } from "../store/transactions";
+  import { DateRangesEnum } from '../types/date-ranges-type';
+  import { getStartOfWeek, filterDate } from '../util/date-util';
   import TransactionDetail from './TransactionDetail.svelte';
   import SearchBar from './SearchBar.svelte';
   import Filter from './Filter.svelte'
@@ -10,6 +12,8 @@
   let searchQuery: string = '';
   let selectedStatuses: TransactionStatus[] = Object.values(TransactionStatus);
   let filteredTransactions = $transactions;
+
+  let dateRangeFilter = DateRangesEnum.All
 
     const openDetailModal = (transaction: Transaction) => {
         isDetailModalOpen = true;
@@ -22,27 +26,38 @@
 
     const updateSearchQuery = (query: string) => {
         searchQuery = query;
-        filterTransactions()
+        applyAllFilters();
     };
 
     const updateStatusCheckbox = (statuses: TransactionStatus[]) => {
         selectedStatuses = statuses;
-        filterTransactions();
+        applyAllFilters();
     }
 
-    const filterTransactions = () => {
+    const updateDateRangeFilter = (dateRange) => {
+        dateRangeFilter = dateRange;
+        applyAllFilters();
+    }
+
+    const applyAllFilters = () => {
         filteredTransactions = $transactions.filter((transaction: Transaction) => {
-        const query = searchQuery.toLowerCase();
-        const isStatusMatch = selectedStatuses.includes(transaction.status);
-        const isMatch = (
-            (transaction.transaction_id.toString().toLowerCase().includes(query) ||
-            transaction.sender_whatsapp.toLowerCase().includes(query) ||
-            transaction.receiver_whatsapp.toLowerCase().includes(query)) &&
-            isStatusMatch
-        );
-        return isMatch;
+            const query = searchQuery.toLowerCase();
+            const matchesSearch = searchQuery === '' || (
+                transaction.transaction_id.toString().toLowerCase().includes(query) ||
+                transaction.sender_whatsapp.toLowerCase().includes(query) ||
+                transaction.receiver_whatsapp.toLowerCase().includes(query)
+            );
+
+            const matchesStatus = selectedStatuses.includes(transaction.status);
+
+            const transactionDate = new Date(transaction.date);
+            const matchesDate = filterDate(transactionDate, dateRangeFilter);
+
+            return matchesSearch && matchesStatus && matchesDate;
         });
-  } 
+    };
+  
+
 </script>
 
 <SearchBar
@@ -51,7 +66,9 @@
 />
 <Filter 
     {selectedStatuses} 
+    {dateRangeFilter}
     updateStatusCheckbox={updateStatusCheckbox}
+    updateDateRangeFilter={updateDateRangeFilter}
 />
 
 <table class="min-w-full table-auto border-collapse">
