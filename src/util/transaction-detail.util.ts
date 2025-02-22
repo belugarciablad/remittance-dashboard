@@ -1,3 +1,5 @@
+import jsPDF from 'jspdf'
+
 export const repeatTransaction = () => {
   alert(
     ' TO DO. Mostrar un preview de como quedaria, permitir editar los montos, y hacer una peticion al endpoint de wpp para recrear la transaccion'
