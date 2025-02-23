@@ -33,5 +33,24 @@
   "transaction.table.receiver": "Receptor",
   "transaction.table.status": "Estado",
   "transaction.loading": "Cargando transacciones...",
-  "transaction.of": "de"
+  "transaction.of": "de",
+  "dateRanges": {
+    "Today": "Hoy",
+    "Yesterday": "Ayer",
+    "This week": "Esta semana",
+    "This month": "Este mes",
+    "This year": "Este año",
+    "All history": "Todo el historial"
+  },
+  "transactionStatus": {
+    "Pending": "Pendiente",
+    "In Progress": "En Proceso",
+    "Completed": "Completado",
+    "Failed": "Fallido"
+  },
+  "paymentMethod": {
+    "Bank deposit": "Depósito bancario",
+    "Cash pickup": "Retiro en efectivo",
+    "Mobile wallet": "Billetera móvil"
+  }
 }

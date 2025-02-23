@@ -2,7 +2,8 @@
   import { screen } from '../store/screen-size.store';
   import { TransactionStatus } from '../types/transaction-model.type';
   import { DateRangesEnum } from '../types/date-ranges-type';
-
+  import { getTranslationKey } from '../util/translations-maps.util';
+  import { t } from 'svelte-i18n';
   export let selectedStatuses: TransactionStatus[] = [];
   export let dateRangeFilter: DateRangesEnum;
   export let updateStatusCheckbox: (statuses: TransactionStatus[]) => void;
@@ -45,7 +46,7 @@
           <span
             class="w-24 md:w-32 h-8 text-sm border-2 border-gray-200 rounded-md flex items-center justify-center peer-checked:bg-blue-600 peer-checked:border-blue-600 peer-checked:text-white transition-colors"
           >
-            {status}
+            {$t(getTranslationKey.transactionStatus(status))}
           </span>
         </label>
       {/each}
@@ -65,7 +66,7 @@
               on:change={() => handleDateRangeChange(daterange)}
               checked={isRadioButtonSelected(daterange)}
             />
-            <span class="text-gray-700">{daterange}</span>
+            <span class="text-gray-700">{$t(getTranslationKey.dateRange(daterange))}</span>
           </label>
         {/each}
       </div>
@@ -78,7 +79,7 @@
       >
         {#each dateRanges as daterange}
           <option value={daterange}>
-            {daterange}
+            {$t(getTranslationKey.dateRange(daterange))}
           </option>
         {/each}
       </select>

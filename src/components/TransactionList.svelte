@@ -16,7 +16,7 @@
   import { filterDate } from '../util/date-util';
   import { onMount } from 'svelte';
   import { t } from 'svelte-i18n';
-
+  import { getTranslationKey } from '../util/translations-maps.util';
   let isDetailModalOpen: boolean = false;
   let selectedTransaction: Transaction | null = null;
   let searchQuery: string = '';
@@ -115,7 +115,7 @@
     class="px-3 py-1.5 h-10 w-auto text-sm text-gray-600 hover:text-white bg-gray-200 hover:bg-gray-400 border border-gray-300 rounded-md shadow-sm transition-colors duration-200 ease-in-out"
     aria-label="Clear all filters"
   >
-    Clear filters
+    {$t('filter.clear')}
   </button>
 </div>
 
@@ -181,7 +181,7 @@
                 role="status"
                 aria-label="Transaction status: {transaction.status}"
                 >
-                {transaction.status}
+                {$t(getTranslationKey.transactionStatus(transaction.status))}
                 </span>
             </td>
             <td class="px-4 py-2 border" role="gridcell">{transaction.payment_method}</td>
@@ -216,39 +216,39 @@
             <span
             class="px-3 py-1 text-xs rounded-md font-semibold {getColorByStatus(transaction.status)}"
             >
-            {transaction.status}
+            {$t(getTranslationKey.transactionStatus(transaction.status))}
             </span>
         </div>
 
         <div class="grid grid-cols-2 gap-2 text-sm text-gray-600">
             <div>
-            <span class="font-semibold">Sender:</span>
+            <span class="font-semibold">{$t('transaction.table.sender')}:</span>
             {formatPhoneNumber(transaction.sender_whatsapp)}
             </div>
             <div>
-            <span class="font-semibold">Receiver:</span>
+            <span class="font-semibold">{$t('transaction.table.receiver')}:</span>
             {formatPhoneNumber(transaction.receiver_whatsapp)}
             </div>
             <div>
-            <span class="font-semibold">Amount Sent:</span>
+            <span class="font-semibold">{$t('transaction.amount_sent')}:</span>
             {transaction.amount_sent}
             {transaction.currency_sent}
             </div>
             <div>
-            <span class="font-semibold">Amount Received:</span>
+            <span class="font-semibold">{$t('transaction.amount_received')}:</span>
             {transaction.amount_received}
             {transaction.currency_received}
             </div>
             <div>
-            <span class="font-semibold">Exchange Rate:</span>
+            <span class="font-semibold">{$t('transaction.exchange_rate')}:</span>
             {transaction.exchange_rate}
             </div>
             <div>
-            <span class="font-semibold">Payment Method:</span>
-            {transaction.payment_method}
+            <span class="font-semibold">{$t('transaction.payment_method')}:</span>
+            {$t(getTranslationKey.paymentMethod(transaction.payment_method))}
             </div>
             <div class="col-span-2">
-            <span class="font-semibold">Date:</span>
+            <span class="font-semibold">{$t('transaction.date')}:</span>
             {new Date(transaction.date).toLocaleString()}
             </div>
         </div>

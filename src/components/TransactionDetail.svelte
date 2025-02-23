@@ -5,7 +5,7 @@
   import { getColorByStatus } from '../util/status-color-util';
   import { Download, Repeat } from 'lucide-svelte';
   import { downloadDetail, repeatTransaction } from '../util/transaction-detail.util';
-
+  import { getTranslationKey } from '../util/translations-maps.util';
   export let isDetailModalOpen = false;
   export let selectedTransaction: Transaction | null = null;
   export let closeModal: () => void;
@@ -21,7 +21,6 @@
     <div
       class="bg-white p-6 rounded-lg shadow-lg w-96 relative flex flex-col justify-center items-center"
     >
-      <!-- Close Button -->
       <button
         class="absolute top-3 right-3 text-red-600 hover:text-red-800 text-xl font-bold"
         on:click={closeModal}
@@ -43,7 +42,7 @@
                   selectedTransaction.status
                 )}"
               >
-                {selectedTransaction.status}
+                {$t(getTranslationKey.transactionStatus(selectedTransaction.status))}   
               </span>
             </p>
           </div>
@@ -56,7 +55,7 @@
             <strong>{$t('transaction.detail.receiver')}</strong>
             {formatPhoneNumber(selectedTransaction.receiver_whatsapp)}
           </p>
-          <p><strong>{$t('transaction.detail.method')}</strong> {selectedTransaction.payment_method}</p>
+          <p><strong>{$t('transaction.detail.method')}</strong> {$t(getTranslationKey.paymentMethod(selectedTransaction.payment_method))}</p>
           <p><strong>{$t('transaction.detail.amount_sent')}</strong>
              {selectedTransaction.amount_sent}
              {selectedTransaction.currency_sent}

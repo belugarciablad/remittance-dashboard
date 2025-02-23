@@ -33,6 +33,25 @@
     "transaction.table.receiver": "Receiver",
     "transaction.table.status": "Status",
     "transaction.loading": "Loading transactions...",
-    "transaction.of": "of"
+    "transaction.of": "of",
+    "dateRanges": {
+        "Today": "Today",
+        "Yesterday": "Yesterday",
+        "This week": "This week",
+        "This month": "This month",
+        "This year": "This year",
+        "All history": "All history"
+    },
+    "transactionStatus": {
+        "Pending": "Pending",
+        "In Progress": "In Progress",
+        "Completed": "Completed",
+        "Failed": "Failed"
+    },
+    "paymentMethod": {
+        "Bank deposit": "Bank deposit",
+        "Cash pickup": "Cash pickup",
+        "Mobile wallet": "Mobile wallet"
+    }
 }
   
