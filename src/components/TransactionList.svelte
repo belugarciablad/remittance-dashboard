@@ -15,6 +15,7 @@
   import { screen } from '../store/screen-size.store';
   import { filterDate } from '../util/date-util';
   import { onMount } from 'svelte';
+  import { t } from 'svelte-i18n';
 
   let isDetailModalOpen: boolean = false;
   let selectedTransaction: Transaction | null = null;
@@ -123,18 +124,18 @@
 <TransactionDetail {isDetailModalOpen} {selectedTransaction} closeModal={closeDetailModal} />
 {#if !isLoading}
     {#if isDesktop}
-    <table class="min-w-full table-auto border-collapse" role="grid" aria-label="Transactions">
+    <table class="min-w-full table-auto border-collapse" role="grid" aria-label={$t('list.title')}>
         <thead>
         <tr class="bg-gray-200">
-            <th class="px-4 py-2 border text-left" role="columnheader" scope="col">Transaction ID</th>
-            <th class="px-8 py-2 border text-left" role="columnheader" scope="col">Sender</th>
-            <th class="px-8 py-2 border text-left" role="columnheader" scope="col">Receiver</th>
-            <th class="px-4 py-2 border text-left" role="columnheader" scope="col">Amount Sent</th>
-            <th class="px-4 py-2 border text-left" role="columnheader" scope="col">Amount Received</th>
-            <th class="px-2 py-2 border text-left" role="columnheader" scope="col">Exchange Rate</th>
-            <th class="px-4 py-2 border text-left" role="columnheader" scope="col">Status</th>
-            <th class="px-4 py-2 border text-left" role="columnheader" scope="col">Payment Method</th>
-            <th class="px-4 py-2 border text-left" role="columnheader" scope="col">Date</th>
+            <th class="px-4 py-2 border text-left" role="columnheader" scope="col">{$t('transaction.table.id')}</th>
+            <th class="px-8 py-2 border text-left" role="columnheader" scope="col">{$t('transaction.table.sender')}</th>
+            <th class="px-8 py-2 border text-left" role="columnheader" scope="col">{$t('transaction.table.receiver')}</th>
+            <th class="px-4 py-2 border text-left" role="columnheader" scope="col">{$t('transaction.amount_sent')}</th>
+            <th class="px-4 py-2 border text-left" role="columnheader" scope="col">{$t('transaction.amount_received')}</th>
+            <th class="px-2 py-2 border text-left" role="columnheader" scope="col">{$t('transaction.exchange_rate')}</th>
+            <th class="px-4 py-2 border text-left" role="columnheader" scope="col">{$t('transaction.table.status')}</th>
+            <th class="px-4 py-2 border text-left" role="columnheader" scope="col">{$t('transaction.payment_method')}</th>
+            <th class="px-4 py-2 border text-left" role="columnheader" scope="col">{$t('transaction.date')}</th>
         </tr>
         </thead>
         <tbody>

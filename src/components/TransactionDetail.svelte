@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { t } from 'svelte-i18n';
   import type { Transaction } from '../types/transaction-model.type';
   import { formatPhoneNumber } from '../util/format.util';
   import { getColorByStatus } from '../util/status-color-util';
@@ -46,27 +47,25 @@
               </span>
             </p>
           </div>
-          <p><strong>Date:</strong> {selectedTransaction.date}</p>
+          <p><strong>{$t('transaction.date')}:</strong> {selectedTransaction.date}</p>
           <p>
-            <strong>Sender:</strong>
+            <strong>{$t('transaction.detail.sender')}</strong>
             {formatPhoneNumber(selectedTransaction.sender_whatsapp)}
           </p>
           <p>
-            <strong>Receiver:</strong>
+            <strong>{$t('transaction.detail.receiver')}</strong>
             {formatPhoneNumber(selectedTransaction.receiver_whatsapp)}
           </p>
-          <p><strong>Method:</strong> {selectedTransaction.payment_method}</p>
-          <p><strong>Amount Sent:</strong>
+          <p><strong>{$t('transaction.detail.method')}</strong> {selectedTransaction.payment_method}</p>
+          <p><strong>{$t('transaction.detail.amount_sent')}</strong>
              {selectedTransaction.amount_sent}
-
              {selectedTransaction.currency_sent}
           </p>
-          <p><strong>Amount Received:</strong>
+          <p><strong>{$t('transaction.detail.amount_received')}</strong>
               {selectedTransaction.amount_received}
-
               {selectedTransaction.currency_received}
           </p>
-          <p><strong>Exchange:</strong> {selectedTransaction.exchange_rate}</p>
+          <p><strong>{$t('transaction.detail.exchange')}</strong> {selectedTransaction.exchange_rate}</p>
         </div>
         <div class="buttons flex justify-between w-full">
           <button
@@ -74,7 +73,7 @@
             on:click={() => downloadDetail(selectedTransaction)}
           >
             <Download class="w-3 h-3 mr-2 inline" />
-            Download
+            {$t('transaction.detail.download')}
           </button>
 
           <button
@@ -82,7 +81,7 @@
             on:click={repeatTransaction}
           >
             <Repeat class="w-3 h-3 mr-2 inline" />
-            Repeat Transaction
+            {$t('transaction.detail.repeat')}
           </button>
         </div>
       {/if}

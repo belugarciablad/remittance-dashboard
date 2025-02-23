@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { t } from 'svelte-i18n';
     import { screen } from '../store/screen-size.store';
     export const itemsPerPage: Number = 5;
     const isDesktop = screen.isDesktop();
@@ -83,7 +84,7 @@
 
       <div class="grid grid-cols-2 gap-2 text-sm text-gray-600">
         <div>
-          <span class="font-semibold">Sender:</span>
+          <span class="font-semibold">{$t('transaction.detail.sender')}</span>
           <div class="h-4 w-24 bg-gray-300 rounded"></div>
         </div>
         <div>
