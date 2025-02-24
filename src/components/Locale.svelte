@@ -25,7 +25,7 @@
         {#each $locales as locale}
             <option 
                 value={locale}
-                class="py-2"
+                class="px-4 py-2 hover:bg-gray-100 cursor-pointer text-base"
             >
                 {locale.toUpperCase()}
             </option>

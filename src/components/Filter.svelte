@@ -1,16 +1,21 @@
 <script lang="ts">
-  import { screen } from '../store/screen-size.store';
-  import { TransactionStatus } from '../types/transaction-model.type';
+  import { Filter as FilterIcon } from 'lucide-svelte';
+  import { TransactionStatus, PaymentMethod } from '../types/transaction-model.type';
   import { DateRangesEnum } from '../types/date-ranges-type';
   import { getTranslationKey } from '../util/translations-maps.util';
   import { t } from 'svelte-i18n';
+  import FilterModal from './FilterModal.svelte';
+
   export let selectedStatuses: TransactionStatus[] = [];
-  export let dateRangeFilter: DateRangesEnum;
+  export let selectedPaymentMethods: PaymentMethod[] = [];
+  export let dateRangeFilter: DateRangesEnum = DateRangesEnum.All;
   export let updateStatusCheckbox: (statuses: TransactionStatus[]) => void;
-  export let updateDateRangeFilter: (daterange: DateRangesEnum) => void;
+  export let removeAllFilters: () => void;
+  export let applyModalFilters: (daterange?: DateRangesEnum, paymentMethods?: PaymentMethod[]) => void;
+
+  let isFilterModalOpen = false;
 
   const availableStatuses = Object.values(TransactionStatus);
-  const dateRanges = Object.values(DateRangesEnum);
 
   const isStatusSelected = (status: TransactionStatus) => selectedStatuses.includes(status);
 
@@ -20,23 +25,22 @@
       : [...selectedStatuses, status];
     updateStatusCheckbox(selectedStatuses);
   };
-
-  const handleDateRangeChange = (range: DateRangesEnum) => {
-    dateRangeFilter = range;
-    updateDateRangeFilter(range);
+  
+  const openFilterModal = () => {
+    isFilterModalOpen = true;
   };
 
-  const isRadioButtonSelected = (range: DateRangesEnum) => dateRangeFilter === range;
+  const closeFilterModal = () => {
+    isFilterModalOpen = false;
+  };
 
-  // Reactive variable to check if we're on mobile
-  $: isDesktop = screen.isDesktop();
 </script>
 
 <div class="filters mb-4 flex flex-col sm:flex-row justify-center sm:gap-40">
   <div class="status-filter mb-4 sm:mb-0">
-    <div class="grid grid-cols-2 gap-2 sm:flex sm:space-x-5">
+    <div class="flex sm:flex sm:space-x-5 items-center justify-center">
       {#each availableStatuses as status}
-        <label class="inline-flex items-center space-x-1">
+        <label class="inline-flex items-center space-x-2">
           <input
             type="checkbox"
             checked={isStatusSelected(status)}
@@ -44,7 +48,7 @@
             class="hidden peer"
           />
           <span
-            class="w-24 md:w-32 h-8 text-sm border-2 border-gray-200 rounded-md flex items-center justify-center peer-checked:bg-blue-600 peer-checked:border-blue-600 peer-checked:text-white transition-colors"
+            class="w-20 md:w-32 h-8 text-xs border-2 border-gray-200 rounded-md flex items-center justify-center peer-checked:bg-blue-600 peer-checked:border-blue-600 peer-checked:text-white transition-colors"
           >
             {$t(getTranslationKey.transactionStatus(status))}
           </span>
@@ -53,36 +57,24 @@
     </div>
   </div>
 
-  <div class="date-filter">
-    {#if isDesktop}
-      <div class="flex space-x-5">
-        {#each dateRanges as daterange}
-          <label>
-            <input
-              type="radio"
-              name="dateRange"
-              value={daterange}
-              bind:group={dateRangeFilter}
-              on:change={() => handleDateRangeChange(daterange)}
-              checked={isRadioButtonSelected(daterange)}
-            />
-            <span class="text-gray-700">{$t(getTranslationKey.dateRange(daterange))}</span>
-          </label>
-        {/each}
+    <button
+      on:click={openFilterModal}
+      class="px-3 py-1.5 h-10 w-auto text-sm text-gray-600 hover:text-white bg-gray-200 hover:bg-gray-400 border border-gray-300 rounded-md shadow-sm transition-colors duration-200 ease-in-out"
+      aria-label="Toggle filters"
+    >
+      <div class="flex items-center gap-2">
+        <FilterIcon size={16} />
       </div>
-    {:else}
-      <select
-        bind:value={dateRangeFilter}
-        on:change={(e) =>
-          handleDateRangeChange((e?.target as HTMLSelectElement).value as DateRangesEnum)}
-        class="w-full p-2 border-2 border-gray-200 rounded-md"
-      >
-        {#each dateRanges as daterange}
-          <option value={daterange}>
-            {$t(getTranslationKey.dateRange(daterange))}
-          </option>
-        {/each}
-      </select>
+    </button>
+    
+    {#if isFilterModalOpen}
+     <FilterModal 
+        {selectedPaymentMethods}
+        {dateRangeFilter} 
+        {selectedStatuses}
+        {removeAllFilters}
+        {applyModalFilters} 
+        {closeFilterModal}/>
     {/if}
-  </div>
 </div>
+    

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { transactions, fetchTransactions, transactionsLoading } from '../store/transactions.store';
   import type { Transaction } from '../types/transaction-model.type';
-  import { TransactionStatus } from '../types/transaction-model.type';
+  import { TransactionStatus, PaymentMethod } from '../types/transaction-model.type';
   import { currentPage, itemsPerPage } from '../store/table-pagination-config.store';
   import { DateRangesEnum } from '../types/date-ranges-type';
   import { getColorByStatus } from '../util/status-color-util';
@@ -17,18 +17,30 @@
   import { onMount } from 'svelte';
   import { t } from 'svelte-i18n';
   import { getTranslationKey } from '../util/translations-maps.util';
-  let isDetailModalOpen: boolean = false;
-  let selectedTransaction: Transaction | null = null;
-  let searchQuery: string = '';
-  let selectedStatuses: TransactionStatus[] = [];
-  let paginatedTransactions: Transaction[] = [];
-  const isDesktop = screen.isDesktop();
+    
   
   $: isLoading = $transactionsLoading;
   $: filteredTransactions = $transactions;
   $: totalPages = Math.max(1, Math.ceil(filteredTransactions?.length / itemsPerPage)) || 1;
-
-  let dateRangeFilter = DateRangesEnum.All;
+  
+  $: {
+      const start = ($currentPage - 1) * itemsPerPage;
+      const end = start + itemsPerPage;
+      paginatedTransactions = filteredTransactions?.slice(start, end);
+      
+      if ($currentPage > totalPages) {
+          $currentPage = totalPages;
+        }
+    }
+    
+    let isDetailModalOpen: boolean = false;
+    let selectedTransaction: Transaction | null = null;
+    let searchQuery: string = '';
+    let selectedStatuses: TransactionStatus[] = [];
+    let selectedPaymentMethods: PaymentMethod[] = [];
+    let paginatedTransactions: Transaction[] = [];
+    const isDesktop = screen.isDesktop();
+    let dateRangeFilter = DateRangesEnum.All;
 
   onMount(() => {
     fetchTransactions();
@@ -38,6 +50,7 @@
     isDetailModalOpen = true;
     selectedTransaction = transaction;
   };
+
   const closeDetailModal = () => {
     isDetailModalOpen = false;
     selectedTransaction = null;
@@ -53,8 +66,9 @@
     applyAllFilters();
   };
 
-  const updateDateRangeFilter = (dateRange: DateRangesEnum) => {
+  const applyModalFilters = (dateRange: DateRangesEnum, paymentMethods: PaymentMethod[]) => {
     dateRangeFilter = dateRange;
+    selectedPaymentMethods = paymentMethods;
     applyAllFilters();
   };
 
@@ -71,10 +85,13 @@
       const matchesStatus =
         selectedStatuses.length === 0 || selectedStatuses.includes(transaction.status);
 
+      const matchesPaymentMethod =
+        selectedPaymentMethods.length === 0 || selectedPaymentMethods.includes(transaction.payment_method);
+
       const transactionDate = new Date(transaction.date);
       const matchesDate = filterDate(transactionDate, dateRangeFilter);
 
-      return matchesSearch && matchesStatus && matchesDate;
+      return matchesSearch && matchesStatus && matchesDate && matchesPaymentMethod;
     });
   };
 
@@ -83,6 +100,7 @@
     filteredTransactions = $transactions;
     searchQuery = '';
     dateRangeFilter = DateRangesEnum.All;
+    selectedPaymentMethods = [];
     selectedStatuses = [];
   };
 
@@ -95,31 +113,19 @@
     $currentPage = page;
   };
 
-  $: {
-    const start = ($currentPage - 1) * itemsPerPage;
-    const end = start + itemsPerPage;
-    paginatedTransactions = filteredTransactions?.slice(start, end);
-
-    if ($currentPage > totalPages) {
-      $currentPage = totalPages;
-    }
-  }
+  
 </script>
 
-<div class="flex w-full justify-between items-start gap-3">
-  <div class="flex-grow">
     <SearchBar {searchQuery} {updateSearchQuery} />
-  </div>
-  <button
-    on:click={removeAllFilters}
-    class="px-3 py-1.5 h-10 w-auto text-sm text-gray-600 hover:text-white bg-gray-200 hover:bg-gray-400 border border-gray-300 rounded-md shadow-sm transition-colors duration-200 ease-in-out"
-    aria-label="Clear all filters"
-  >
-    {$t('filter.clear')}
-  </button>
-</div>
+  <Filter 
+    {selectedStatuses} 
+    {selectedPaymentMethods}
+    {dateRangeFilter} 
+    {updateStatusCheckbox} 
+    {applyModalFilters}
+    {removeAllFilters}
+  />
 
-<Filter {selectedStatuses} {dateRangeFilter} {updateStatusCheckbox} {updateDateRangeFilter} />
 
 <TransactionDetail {isDetailModalOpen} {selectedTransaction} closeModal={closeDetailModal} />
 {#if !isLoading}
@@ -184,7 +190,9 @@
                 {$t(getTranslationKey.transactionStatus(transaction.status))}
                 </span>
             </td>
-            <td class="px-4 py-2 border" role="gridcell">{transaction.payment_method}</td>
+            <td class="px-4 py-2 border" role="gridcell">
+                {$t(getTranslationKey.paymentMethod(transaction.payment_method))}
+            </td>
             <td class="px-4 py-2 border" role="gridcell"
                 >{new Date(transaction.date).toLocaleString()}</td
             >
