@@ -5,7 +5,10 @@
   import { getTranslationKey } from '../util/translations-maps.util';
   import { t } from 'svelte-i18n';
   import FilterModal from './FilterModal.svelte';
+  import SearchBar from './SearchBar.svelte';
 
+  export let searchQuery: string = '';
+  export let updateSearchQuery: (query: string) => void;
   export let selectedStatuses: TransactionStatus[] = [];
   export let selectedPaymentMethods: PaymentMethod[] = [];
   export let dateRangeFilter: DateRangesEnum = DateRangesEnum.All;
@@ -37,6 +40,21 @@
 </script>
 
 <div class="filters mb-4 flex flex-col sm:flex-row justify-center sm:gap-40">
+    <div class="first-row flex items-start justify-center w-full gap-2">
+        <div class="flex-grow">
+            <SearchBar {searchQuery} {updateSearchQuery} />
+        </div>
+        <button
+        on:click={openFilterModal}
+        class="px-3 py-1.5 h-10 w-auto text-sm text-gray-600 hover:text-white bg-gray-200 hover:bg-gray-400 border border-gray-300 rounded-md shadow-sm transition-colors duration-200 ease-in-out"
+        aria-label="Toggle filters"
+         >
+            <div class="flex items-center gap-2">
+            <FilterIcon size={16} />
+            </div>
+        </button>
+    </div>
+
   <div class="status-filter mb-4 sm:mb-0">
     <div class="flex sm:flex sm:space-x-5 items-center justify-center">
       {#each availableStatuses as status}
@@ -56,16 +74,6 @@
       {/each}
     </div>
   </div>
-
-    <button
-      on:click={openFilterModal}
-      class="px-3 py-1.5 h-10 w-auto text-sm text-gray-600 hover:text-white bg-gray-200 hover:bg-gray-400 border border-gray-300 rounded-md shadow-sm transition-colors duration-200 ease-in-out"
-      aria-label="Toggle filters"
-    >
-      <div class="flex items-center gap-2">
-        <FilterIcon size={16} />
-      </div>
-    </button>
     
     {#if isFilterModalOpen}
      <FilterModal 

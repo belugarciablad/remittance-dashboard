@@ -7,7 +7,6 @@
   import { getColorByStatus } from '../util/status-color-util';
   import { formatPhoneNumber } from '../util/format.util';
   import TransactionDetail from './TransactionDetail.svelte';
-  import SearchBar from './SearchBar.svelte';
   import Filter from './Filter.svelte';
   import Pagination from './Pagination.svelte';
   import Skeleton from './Skeleton.svelte';
@@ -41,8 +40,8 @@
     let paginatedTransactions: Transaction[] = [];
     const isDesktop = screen.isDesktop();
     let dateRangeFilter = DateRangesEnum.All;
-    let sortColumn: string = 'transaction_id'; // default sort column
-    let sortDirection: 'asc' | 'desc' = 'asc'; // default sort direction
+    let sortColumn: string = 'transaction_id';
+    let sortDirection: 'asc' | 'desc' = 'asc';
 
   onMount(() => {
     fetchTransactions();
@@ -136,18 +135,16 @@
 
   
 </script>
-
-    <SearchBar {searchQuery} {updateSearchQuery} />
   <Filter 
+    {searchQuery}
     {selectedStatuses} 
     {selectedPaymentMethods}
     {dateRangeFilter} 
+    {updateSearchQuery}
     {updateStatusCheckbox} 
     {applyModalFilters}
     {removeAllFilters}
   />
-
-
 <TransactionDetail {isDetailModalOpen} {selectedTransaction} closeModal={closeDetailModal} />
 {#if !isLoading}
     {#if isDesktop}
