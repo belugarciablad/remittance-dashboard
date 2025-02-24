@@ -1,8 +1,8 @@
-<script>
+<script lang="ts">
     import { locale, locales, t } from 'svelte-i18n';
     import { Languages } from 'lucide-svelte';
 
-    let selectElement;
+    let selectElement: HTMLSelectElement;
 </script>
 
 <div class="relative inline-flex items-center">
