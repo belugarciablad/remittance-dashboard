@@ -11,7 +11,7 @@
   import Filter from './Filter.svelte';
   import Pagination from './Pagination.svelte';
   import Skeleton from './Skeleton.svelte';
-  import { Clipboard } from 'lucide-svelte';
+  import { Clipboard, ArrowDownUp, ArrowDown10, ArrowDown01, CalendarArrowUp, CalendarArrowDown, ArrowDownAZ, ArrowDownZA } from 'lucide-svelte';
   import { screen } from '../store/screen-size.store';
   import { filterDate } from '../util/date-util';
   import { onMount } from 'svelte';
@@ -41,6 +41,8 @@
     let paginatedTransactions: Transaction[] = [];
     const isDesktop = screen.isDesktop();
     let dateRangeFilter = DateRangesEnum.All;
+    let sortColumn: string = 'transaction_id'; // default sort column
+    let sortDirection: 'asc' | 'desc' = 'asc'; // default sort direction
 
   onMount(() => {
     fetchTransactions();
@@ -93,6 +95,25 @@
 
       return matchesSearch && matchesStatus && matchesDate && matchesPaymentMethod;
     });
+
+    filteredTransactions.sort((a: { [x: string]: any; }, b: { [x: string]: any; }) => {
+      const aValue = a[sortColumn];
+      const bValue = b[sortColumn];
+
+      if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
+      if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
+      return 0;
+    });
+  };
+
+  const toggleSort = (column: string) => {
+    if (sortColumn === column) {
+      sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      sortColumn = column;
+      sortDirection = 'asc';
+    }
+    applyAllFilters();
   };
 
   const removeAllFilters = () => {
@@ -133,15 +154,96 @@
     <table class="min-w-full table-auto border-collapse" role="grid" aria-label={$t('list.title')}>
         <thead>
         <tr class="bg-gray-200">
-            <th class="px-4 py-2 border text-left" role="columnheader" scope="col">{$t('transaction.table.id')}</th>
-            <th class="px-8 py-2 border text-left" role="columnheader" scope="col">{$t('transaction.table.sender')}</th>
-            <th class="px-8 py-2 border text-left" role="columnheader" scope="col">{$t('transaction.table.receiver')}</th>
-            <th class="px-4 py-2 border text-left" role="columnheader" scope="col">{$t('transaction.amount_sent')}</th>
-            <th class="px-4 py-2 border text-left" role="columnheader" scope="col">{$t('transaction.amount_received')}</th>
-            <th class="px-2 py-2 border text-left" role="columnheader" scope="col">{$t('transaction.exchange_rate')}</th>
-            <th class="px-4 py-2 border text-left" role="columnheader" scope="col">{$t('transaction.table.status')}</th>
-            <th class="px-4 py-2 border text-left" role="columnheader" scope="col">{$t('transaction.payment_method')}</th>
-            <th class="px-4 py-2 border text-left" role="columnheader" scope="col">{$t('transaction.date')}</th>
+            <th class="text-xs px-4 py-2 border text-left" role="columnheader" scope="col" on:click={() => toggleSort('transaction_id')}>
+                <span class="flex items-center">
+                    <span>{$t('transaction.table.id')}</span>
+                    {#if sortColumn === 'transaction_id'} 
+                        {#if sortDirection === 'asc'} <ArrowDown10 size={12} class="ml-1" /> {:else} <ArrowDown01 size={12} class="ml-1" /> {/if} 
+                    {:else}
+                        <ArrowDownUp size={12} class="ml-1" />
+                    {/if}
+                </span>
+            </th>
+            <th class="text-xs px-8 py-2 border text-left" role="columnheader" scope="col" on:click={() => toggleSort('sender_whatsapp')}>
+                <span class="flex items-center">
+                    <span>{$t('transaction.table.sender')}</span>
+                    {#if sortColumn === 'sender_whatsapp'} 
+                        {#if sortDirection === 'asc'} <ArrowDown10 size={12} class="ml-1" /> {:else} <ArrowDown01 size={12} class="ml-1" /> {/if} 
+                    {:else}
+                        <ArrowDownUp size={12} class="ml-1" />
+                    {/if}
+                </span>
+            </th>
+            <th class="text-xs px-8 py-2 border text-left" role="columnheader" scope="col" on:click={() => toggleSort('receiver_whatsapp')}>
+                <span class="flex items-center">
+                    <span>{$t('transaction.table.receiver')}</span>
+                    {#if sortColumn === 'receiver_whatsapp'} 
+                        {#if sortDirection === 'asc'} <ArrowDown10 size={12} class="ml-1" /> {:else} <ArrowDown01 size={12} class="ml-1" /> {/if} 
+                    {:else}
+                        <ArrowDownUp size={12} class="ml-1" />
+                    {/if}
+                </span>
+            </th>
+            <th class="text-xs px-4 py-2 border text-left" role="columnheader" scope="col" on:click={() => toggleSort('amount_sent')}>
+                <span class="flex items-center">
+                    <span>{$t('transaction.amount_sent')}</span>
+                    {#if sortColumn === 'amount_sent'} 
+                        {#if sortDirection === 'asc'} <ArrowDown10 size={12} class="ml-1" /> {:else} <ArrowDown01 size={12} class="ml-1" /> {/if} 
+                    {:else}
+                        <ArrowDownUp size={12} class="ml-1" />
+                    {/if}
+                </span>
+            </th>
+            <th class="text-xs px-4 py-2 border text-left" role="columnheader" scope="col" on:click={() => toggleSort('amount_received')}>
+                <span class="flex items-center">
+                    <span>{$t('transaction.amount_received')}</span>
+                    {#if sortColumn === 'amount_received'} 
+                        {#if sortDirection === 'asc'} <ArrowDown10 size={12} class="ml-1" /> {:else} <ArrowDown01 size={12} class="ml-1" /> {/if} 
+                    {:else}
+                        <ArrowDownUp size={12} class="ml-1" />
+                    {/if}
+                </span>
+            </th>
+            <th class="text-xs px-2 py-2 border text-left" role="columnheader" scope="col" on:click={() => toggleSort('exchange_rate')}>
+                <span class="flex items-center">
+                    <span>{$t('transaction.exchange_rate')}</span>
+                    {#if sortColumn === 'exchange_rate'} 
+                        {#if sortDirection === 'asc'} <ArrowDown10 size={12} class="ml-1" /> {:else} <ArrowDown01 size={12} class="ml-1" /> {/if} 
+                    {:else}
+                        <ArrowDownUp size={12} class="ml-1" />
+                    {/if}
+                </span>
+            </th>
+            <th class="text-xs px-4 py-2 border text-left" role="columnheader" scope="col" on:click={() => toggleSort('status')}>
+                <span class="flex items-center">
+                    <span>{$t('transaction.table.status')}</span>
+                    {#if sortColumn === 'status'} 
+                        {#if sortDirection === 'asc'} <ArrowDownAZ size={12} class="ml-1" /> {:else} <ArrowDownZA size={12} class="ml-1" /> {/if} 
+                    {:else}
+                        <ArrowDownUp size={12} class="ml-1" />
+                    {/if}
+                </span>
+            </th>
+            <th class="text-xs px-4 py-2 border text-left" role="columnheader" scope="col" on:click={() => toggleSort('payment_method')}>
+                <span class="flex items-center">
+                    <span>{$t('transaction.payment_method')}</span>
+                    {#if sortColumn === 'payment_method'} 
+                        {#if sortDirection === 'asc'} <ArrowDownAZ size={12} class="ml-1" /> {:else} <ArrowDownZA size={12} class="ml-1" /> {/if} 
+                    {:else}
+                        <ArrowDownUp size={12} class="ml-1" />
+                    {/if}
+                </span>
+            </th>
+            <th class="text-xs px-4 py-2 border text-left" role="columnheader" scope="col" on:click={() => toggleSort('date')}>
+                <span class="flex items-center">
+                    <span>{$t('transaction.date')}</span>
+                    {#if sortColumn === 'date'} 
+                        {#if sortDirection === 'asc'} <CalendarArrowUp size={12} class="ml-1" /> {:else} <CalendarArrowDown size={12} class="ml-1" /> {/if} 
+                    {:else}
+                        <ArrowDownUp size={12} class="ml-1" />
+                    {/if}
+                </span>
+            </th>
         </tr>
         </thead>
         <tbody>
