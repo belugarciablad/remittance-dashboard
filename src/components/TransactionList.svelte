@@ -13,39 +13,71 @@
   import { Clipboard, ArrowDownUp, ArrowDown10, ArrowDown01, CalendarArrowUp, CalendarArrowDown, ArrowDownAZ, ArrowDownZA } from 'lucide-svelte';
   import { screen } from '../store/screen-size.store';
   import { filterDate } from '../util/date-util';
-  import { onMount } from 'svelte';
+  import { onMount, tick } from 'svelte';
   import { t } from 'svelte-i18n';
   import { getTranslationKey } from '../util/translations-maps.util';
+  import { writable } from 'svelte/store';
     
   
   $: isLoading = $transactionsLoading;
   $: filteredTransactions = $transactions;
   $: totalPages = Math.max(1, Math.ceil(filteredTransactions?.length / itemsPerPage)) || 1;
+  const scrollY = writable(0);
   
+  const MOBILE_BATCH_SIZE = 10;
+  let mobileDisplayedItems = MOBILE_BATCH_SIZE;
+  let isLoadingMore = false;
+  
+
+  onMount(() => {
+    fetchTransactions();
+    const updateScroll = () => scrollY.set(window.scrollY);
+    window.addEventListener('scroll', updateScroll);
+    return () => {
+      window.removeEventListener('scroll', updateScroll);
+    };
+  });
+
   $: {
+    if (screen.isDesktop()) {
       const start = ($currentPage - 1) * itemsPerPage;
       const end = start + itemsPerPage;
       paginatedTransactions = filteredTransactions?.slice(start, end);
       
       if ($currentPage > totalPages) {
-          $currentPage = totalPages;
-        }
+        $currentPage = totalPages;
+      }
+    } else {
+      paginatedTransactions = filteredTransactions?.slice(0, mobileDisplayedItems);
     }
-    
-    let isDetailModalOpen: boolean = false;
-    let selectedTransaction: Transaction | null = null;
-    let searchQuery: string = '';
-    let selectedStatuses: TransactionStatus[] = [];
-    let selectedPaymentMethods: PaymentMethod[] = [];
-    let paginatedTransactions: Transaction[] = [];
-    const isDesktop = screen.isDesktop();
-    let dateRangeFilter = DateRangesEnum.All;
-    let sortColumn: string = 'transaction_id';
-    let sortDirection: 'asc' | 'desc' = 'asc';
+  }
+  
+  let isDetailModalOpen: boolean = false;
+  let selectedTransaction: Transaction | null = null;
+  let searchQuery: string = '';
+  let dateRangeFilter = DateRangesEnum.All;
+  let selectedStatuses: TransactionStatus[] = [];
+  let selectedPaymentMethods: PaymentMethod[] = [];
+  let paginatedTransactions: Transaction[] = [];
+  const isDesktop = screen.isDesktop();
+  let sortColumn: string = 'transaction_id';
+  let sortDirection: 'asc' | 'desc' = 'asc';
 
-  onMount(() => {
-    fetchTransactions();
-  });
+  const handleScroll = async () => {
+    if (!screen.isDesktop()) {
+      const bottom = Math.ceil(window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight;
+      
+      if (bottom && !isLoadingMore && mobileDisplayedItems < filteredTransactions.length) {
+        isLoadingMore = true;
+        
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        mobileDisplayedItems = Math.min(mobileDisplayedItems + MOBILE_BATCH_SIZE, filteredTransactions.length);
+        isLoadingMore = false;
+        await tick();
+      }
+    }
+  };
 
   const openDetailModal = (transaction: Transaction) => {
     isDetailModalOpen = true;
@@ -67,14 +99,15 @@
     applyAllFilters();
   };
 
-  const applyModalFilters = (dateRange: DateRangesEnum, paymentMethods: PaymentMethod[]) => {
-    dateRangeFilter = dateRange;
-    selectedPaymentMethods = paymentMethods;
+  const applyModalFilters = (dateRange?: DateRangesEnum, paymentMethods?: PaymentMethod[]) => {
+    dateRangeFilter = dateRange ?? DateRangesEnum.All;
+    selectedPaymentMethods = paymentMethods ?? [];
     applyAllFilters();
   };
 
   const applyAllFilters = () => {
     $currentPage = 1;
+    mobileDisplayedItems = MOBILE_BATCH_SIZE; // Reset mobile items
     filteredTransactions = $transactions.filter((transaction: Transaction) => {
       const query = searchQuery.toLowerCase();
       const matchesSearch =
@@ -366,5 +399,27 @@
     <Skeleton {itemsPerPage}/>
 {/if}
 
-<Pagination {totalPages} {goToPage} />
+{#if !isDesktop}
+{#if isLoadingMore} 
+  <div class="flex justify-center p-4">
+    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+  </div>
+  {:else}
+    {#if $scrollY !== 0}
+    <button 
+        on:click={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        class="fixed bottom-4 right-4 bg-blue-500 hover:bg-blue-600 text-white rounded-full p-3 shadow-lg transition-all duration-300 transform hover:scale-110"
+        aria-label={$t('common.scroll_to_top')}
+    >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+    </button>
+    {/if}
+{/if}
+{/if}
+
+{#if isDesktop}
+  <Pagination {totalPages} {goToPage} />
+{/if}
 
