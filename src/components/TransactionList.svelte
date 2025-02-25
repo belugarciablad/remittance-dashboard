@@ -435,9 +435,12 @@
             <td class="px-4 py-2 border text-center" role="gridcell">
               {$t(getTranslationKey.paymentMethod(transaction.payment_method))}
             </td>
-            <td class="px-4 py-2 border text-center" role="gridcell"
-              >{new Date(transaction.date).toLocaleString()}</td
-            >
+            <td class="px-4 py-1 border text-center whitespace-nowrap" role="gridcell">
+              <div class="flex flex-col items-center gap-0.5">
+                <span class="text-sm whitespace-nowrap">{new Date(transaction.date).toLocaleDateString()}</span>
+                <span class="text-xs text-gray-500 whitespace-nowrap">{new Date(transaction.date).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})}</span>
+              </div>
+            </td>
           </tr>
         {/each}
       </tbody>
@@ -499,7 +502,13 @@
           </div>
           <div class="col-span-2">
             <span class="font-semibold">{$t('transaction.date')}:</span>
-            {new Date(transaction.date).toLocaleString()}
+            {new Date(transaction.date).toLocaleString([], {
+              year: 'numeric',
+              month: 'numeric',
+              day: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit'
+            })}
           </div>
         </div>
       </div>

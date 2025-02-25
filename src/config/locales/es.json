@@ -57,5 +57,11 @@
     "Bank deposit": "Depósito bancario",
     "Cash pickup": "Retiro en efectivo",
     "Mobile wallet": "Billetera móvil"
+  },
+  "menu": {
+    "home": "Inicio",
+    "contacts": "Contactos",
+    "metrics": "Métricas",
+    "toggle": "Cambiar menú"
   }
 }

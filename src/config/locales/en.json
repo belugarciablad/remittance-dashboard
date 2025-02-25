@@ -57,5 +57,11 @@
     "Bank deposit": "Bank deposit",
     "Cash pickup": "Cash pickup",
     "Mobile wallet": "Mobile wallet"
+  },
+  "menu": {
+    "home": "Home",
+    "contacts": "Contacts",
+    "metrics": "Metrics",
+    "toggle": "Toggle menu"
   }
 }
