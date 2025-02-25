@@ -73,7 +73,7 @@
     <div class="applied-filters">
       {#if dateRangeFilter || selectedPaymentMethods.length > 0 || selectedStatuses.length > 0}
         <div class="applied-filters bg-gray-100 p-4 rounded-lg shadow-md">
-          <h3 class="text-md font-semibold text-gray-800">{$t('filter.title.appliedFilters')}</h3>
+          <h3 class="text-md font-semibold text-gray-800">{$t('filter.appliedFilters')}</h3>
           <div class="flex flex-wrap gap-x-2 gap-y-4">
             <div class="text-gray-600">
               <span
@@ -100,7 +100,7 @@
       {/if}
     </div>
     <div class="date-filter mb-4 mt-4">
-      <h3 class="text-md font-semibold">{$t('filter.title.dateRange')}</h3>
+      <h3 class="text-md font-semibold">{$t('filter.dateRange')}</h3>
       <select
         bind:value={dateRangeFilter}
         on:change={(e) =>
@@ -116,7 +116,7 @@
       </select>
     </div>
     <div class="payment-method-filter mb-4">
-      <h3 class="text-md font-semibold">{$t('filter.title.paymentMethod')}</h3>
+      <h3 class="text-md font-semibold">{$t('filter.paymentMethod')}</h3>
       <div class="grid grid-cols-1 gap-2 mt-2">
         {#each paymentMethods as paymentMethod}
           <label class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-50 cursor-pointer">

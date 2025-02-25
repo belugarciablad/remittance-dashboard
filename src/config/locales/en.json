@@ -1,44 +1,68 @@
 {
-  "header.remittance-dashboard": "Remittance Dashboard",
-  "locale.select": "Select Language",
-  "pagination.prev": "← Prev",
-  "pagination.next": "Next →",
-  "pagination.page": "Page",
-  "footer.rights": "2025 Remittance Dashboard. All rights reserved.",
-  "dashboard.transactions": "Transactions",
-  "filter.clear": "Clear filters",
-  "filter.apply": "Apply filters",
-  "filter.title": "Filters",
-  "filter.title.appliedFilters": "Applied",
-  "filter.title.paymentMethod": "Payment Method",
-  "filter.title.dateRange": "Date Range",
-  "transaction.amount_sent": "Amount Sent",
-  "transaction.amount_received": "Amount Received",
-  "transaction.exchange_rate": "Exchange Rate",
-  "transaction.payment_method": "Payment Method",
-  "transaction.date": "Date",
-  "transaction.detail.title": "Transaction Details",
-  "transaction.detail.sender": "Sender:",
-  "transaction.detail.receiver": "Receiver:",
-  "transaction.detail.method": "Method:",
-  "transaction.detail.amount_sent": "Amount Sent:",
-  "transaction.detail.amount_received": "Amount Received:",
-  "transaction.detail.exchange": "Exchange rate:",
-  "transaction.detail.download": "Download",
-  "transaction.detail.repeat": "Repeat Transaction",
-  "transaction.card": "Transaction card",
-  "transaction.status": "Transaction status: {status}",
-  "transaction.copy": "Copy Transaction ID {transaction_id}",
-  "transaction.filter": "Filter Transactions",
-  "transaction.search": "Search Transactions",
-  "transaction.no_results": "No transactions found.",
-  "search.placeholder": "Search by Transaction ID, Sender number, or Receiver number...",
-  "transaction.table.id": "Transaction ID",
-  "transaction.table.sender": "Sender",
-  "transaction.table.receiver": "Receiver",
-  "transaction.table.status": "Status",
-  "transaction.loading": "Loading transactions...",
-  "transaction.of": "of",
+  "header": {
+    "remittance-dashboard": "Remittance Dashboard"
+  },
+  "locale": {
+    "select": "Select Language"
+  },
+  "pagination": {
+    "prev": "← Prev",
+    "next": "Next →",
+    "page": "Page"
+  },
+  "footer": {
+    "rights": "2025 Remittance Dashboard. All rights reserved."
+  },
+  "dashboard": {
+    "transactions": "Transactions"
+  },
+  "filter": {
+    "clear": "Clear filters",
+    "apply": "Apply filters",
+    "title": "Filters",
+    "appliedFilters": "Applied",
+    "paymentMethod": "Payment Method",
+    "dateRange": "Date Range"
+  },
+  "transaction": {
+    "amount_sent": "Amount Sent",
+    "amount_received": "Amount Received",
+    "exchange_rate": "Exchange Rate",
+    "payment_method": "Payment Method",
+    "date": "Date",
+    "status": "Transaction status: {status}",
+    "copy": "Copy Transaction ID {transaction_id}",
+    "filter": "Filter Transactions",
+    "search": "Search Transactions",
+    "no_results": "No transactions found.",
+    "loading": "Loading transactions...",
+    "of": "of",
+    "card": "Transaction card",
+    "detail": {
+      "title": "Transaction Details",
+      "sender": "Sender:",
+      "receiver": "Receiver:",
+      "method": "Method:",
+      "amount_sent": "Amount Sent:",
+      "amount_received": "Amount Received:",
+      "exchange": "Exchange rate:",
+      "download": "Download",
+      "repeat": "Repeat Transaction"
+    },
+    "table": {
+      "id": "Transaction ID",
+      "sender": "Sender",
+      "receiver": "Receiver",
+      "status": "Status"
+    },
+    "empty": {
+      "title": "No Transactions Found",
+      "description": "There are no transactions to display at this time. New transactions will appear here once they are processed."
+    }
+  },
+  "search": {
+    "placeholder": "Search by Transaction ID, Sender number, or Receiver number..."
+  },
   "dateRanges": {
     "Today": "Today",
     "Yesterday": "Yesterday",
@@ -63,5 +87,9 @@
     "contacts": "Contacts",
     "metrics": "Metrics",
     "toggle": "Toggle menu"
+  },
+  "transaction.empty": {
+    "title": "No Transactions Found",
+    "description": "There are no transactions to display at this time. New transactions will appear here once they are processed."
   }
 }

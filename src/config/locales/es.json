@@ -1,44 +1,68 @@
 {
-  "header.remittance-dashboard": "Tablero de Remesas",
-  "locale.select": "Seleccionar Idioma",
-  "pagination.prev": "← Anterior",
-  "pagination.next": "Siguiente →",
-  "pagination.page": "Página",
-  "footer.rights": "2025 Tablero de Remesas. Todos los derechos reservados.",
-  "dashboard.transactions": "Transacciones",
-  "filter.clear": "Limpiar filtros",
-  "filter.apply": "Aplicar filtros",
-  "filter.title": "Filtros",
-  "filter.title.appliedFilters": "Aplicados",
-  "filter.title.paymentMethod": "Método de Pago",
-  "filter.title.dateRange": "Rango de Fechas",
-  "transaction.amount_sent": "Monto Enviado",
-  "transaction.amount_received": "Monto Recibido",
-  "transaction.exchange_rate": "Tasa de Cambio",
-  "transaction.payment_method": "Método de Pago",
-  "transaction.date": "Fecha",
-  "transaction.detail.title": "Detalles de la Transacción",
-  "transaction.detail.sender": "Remitente:",
-  "transaction.detail.receiver": "Receptor:",
-  "transaction.detail.method": "Método:",
-  "transaction.detail.amount_sent": "Monto Enviado:",
-  "transaction.detail.amount_received": "Monto Recibido:",
-  "transaction.detail.exchange": "Tasa de Cambio:",
-  "transaction.detail.download": "Descargar",
-  "transaction.detail.repeat": "Repetir Transacción",
-  "transaction.card": "Tarjeta de Transacción",
-  "transaction.status": "Estado de la Transacción: {status}",
-  "transaction.copy": "Copiar ID de Transacción {transaction_id}",
-  "transaction.filter": "Filtrar Transacciones",
-  "transaction.search": "Buscar Transacciones",
-  "transaction.no_results": "No se encontraron transacciones.",
-  "search.placeholder": "Buscar por ID de Transacción, número de Remitente o Receptor...",
-  "transaction.table.id": "ID de Transacción",
-  "transaction.table.sender": "Remitente",
-  "transaction.table.receiver": "Receptor",
-  "transaction.table.status": "Estado",
-  "transaction.loading": "Cargando transacciones...",
-  "transaction.of": "de",
+  "header": {
+    "remittance-dashboard": "Tablero de Remesas"
+  },
+  "locale": {
+    "select": "Seleccionar Idioma"
+  },
+  "pagination": {
+    "prev": "← Anterior",
+    "next": "Siguiente →",
+    "page": "Página"
+  },
+  "footer": {
+    "rights": "2025 Tablero de Remesas. Todos los derechos reservados."
+  },
+  "dashboard": {
+    "transactions": "Transacciones"
+  },
+  "filter": {
+    "clear": "Limpiar filtros",
+    "apply": "Aplicar filtros",
+    "title": "Filtros",
+    "appliedFilters": "Aplicados",
+    "paymentMethod": "Método de Pago", 
+    "dateRange": "Rango de Fechas"
+  },
+  "transaction": {
+    "amount_sent": "Monto Enviado",
+    "amount_received": "Monto Recibido",
+    "exchange_rate": "Tasa de Cambio",
+    "payment_method": "Método de Pago",
+    "date": "Fecha",
+    "status": "Estado de la Transacción: {status}",
+    "copy": "Copiar ID de Transacción {transaction_id}",
+    "filter": "Filtrar Transacciones",
+    "search": "Buscar Transacciones",
+    "no_results": "No se encontraron transacciones.",
+    "loading": "Cargando transacciones...",
+    "of": "de",
+    "card": "Tarjeta de Transacción",
+    "detail": {
+      "title": "Detalles de la Transacción",
+      "sender": "Remitente:",
+      "receiver": "Receptor:",
+      "method": "Método:",
+      "amount_sent": "Monto Enviado:",
+      "amount_received": "Monto Recibido:",
+      "exchange": "Tasa de Cambio:",
+      "download": "Descargar",
+      "repeat": "Repetir Transacción"
+    },
+    "table": {
+      "id": "ID de Transacción",
+      "sender": "Remitente",
+      "receiver": "Receptor",
+      "status": "Estado"
+    },
+    "empty": {
+      "title": "No se encontraron transacciones",
+      "description": "No hay transacciones para mostrar en este momento. Las nuevas transacciones aparecerán aquí una vez que se procesen."
+    }
+  },
+  "search": {
+    "placeholder": "Buscar por ID de Transacción, número de Remitente o Receptor..."
+  },
   "dateRanges": {
     "Today": "Hoy",
     "Yesterday": "Ayer",
@@ -63,5 +87,9 @@
     "contacts": "Contactos",
     "metrics": "Métricas",
     "toggle": "Cambiar menú"
+  },
+  "transaction.empty": {
+    "title": "No se encontraron transacciones",
+    "description": "No hay transacciones para mostrar en este momento. Las nuevas transacciones aparecerán aquí una vez que se procesen."
   }
 }
