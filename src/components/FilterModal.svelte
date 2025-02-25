@@ -135,7 +135,7 @@
       </div>
     </div>
 
-    <div class="buttons-container flex justify-between">
+    <div class="buttons-container flex justify-between gap-8">
       <button
         on:click={() => {
           handleRemoveAllFilters();

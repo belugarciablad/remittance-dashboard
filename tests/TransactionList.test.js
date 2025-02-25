@@ -1,7 +1,8 @@
 import { render, fireEvent, screen } from '@testing-library/svelte';
 import TransactionList from '../src/components/TransactionList.svelte';
-import { transactions } from '../src/store/transactions.store';
+import { transactions, transactionsLoading } from '../src/store/transactions.store';
 import { beforeEach, describe, it, expect } from 'vitest';
+import { prettyDOM } from '@testing-library/dom';
 
 // Mock de datos
 const mockTransactions = [
@@ -31,17 +32,22 @@ const mockTransactions = [
 
 describe('TransactionList Component', () => {
   beforeEach(() => {
+    // Set loading to false and populate transactions
+    transactionsLoading.set(false);
     transactions.set(mockTransactions);
   });
 
   it('Renderiza la lista con transacciones', async () => {
-    render(TransactionList);
+    const { container } = render(TransactionList);
+    
+    // Log the complete DOM with unlimited depth
+    console.log(prettyDOM(container, Infinity, { highlight: false }));
+
     expect(screen.getAllByText('Sender:')).toBeTruthy();
     expect(screen.getAllByText('Receiver:')).toBeTruthy();
     expect(screen.getAllByText('Amount Sent:')).toBeTruthy();
     expect(screen.getAllByText('Amount Received:')).toBeTruthy();
 
-    // Verifica si las transacciones aparecen en la tabla
     expect(screen.getByText('12345678')).toBeTruthy();
     expect(screen.getByText('100')).toBeTruthy();
     expect(screen.getByText('95')).toBeTruthy();
@@ -56,11 +62,11 @@ describe('TransactionList Component', () => {
   it('Filtra transacciones por búsqueda', async () => {
     render(TransactionList);
 
-    const searchInput = screen.getByRole('textbox'); // Usa getByRole para mayor accesibilidad
+    const searchInput = screen.getByRole('textbox'); 
     await fireEvent.input(searchInput, { target: { value: '12345678' } });
 
     expect(screen.getByText('12345678')).toBeTruthy();
-    expect(screen.queryByText('999999')).toBeFalsy(); // queryByText para verificar que NO existe
+    expect(screen.queryByText('999999')).toBeFalsy();
   });
 
   it('Abre y cierra el modal de detalle', async () => {
@@ -69,11 +75,11 @@ describe('TransactionList Component', () => {
     const firstTransaction = screen.getByText('12345678');
     await fireEvent.click(firstTransaction);
 
-    expect(screen.getByRole('dialog')).toBeTruthy(); // Usa getByRole
+    expect(screen.getByRole('dialog')).toBeTruthy();
 
-    const closeButton = screen.getByRole('button', { name: 'Close modal' }); // Usa getByRole y name
+    const closeButton = screen.getByRole('button', { name: 'Close modal' });
     await fireEvent.click(closeButton);
 
-    expect(screen.queryByRole('dialog')).toBeFalsy(); // Usa queryByRole
+    expect(screen.queryByRole('dialog')).toBeFalsy();
   });
 });

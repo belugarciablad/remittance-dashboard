@@ -28,5 +28,7 @@
     </footer>
   </div>
 {:else}
-  <img src="./assets/logo.svg" alt="Felix Loader" />
+  <div class="flex items-center justify-center h-screen">
+    <img src="./assets/logo.svg" alt="Felix Loader" class="w-24 h-24 animate-spin" />
+  </div>
 {/if}
