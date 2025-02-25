@@ -46,7 +46,13 @@
               </span>
             </p>
           </div>
-          <p><strong>{$t('transaction.date')}:</strong> {selectedTransaction.date}</p>
+          <p><strong>{$t('transaction.date')}:</strong> {new Date(selectedTransaction.date).toLocaleString([], {
+            year: 'numeric',
+            month: 'numeric', 
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          })}</p>
           <p>
             <strong>{$t('transaction.detail.sender')}</strong>
             {formatPhoneNumber(selectedTransaction.sender_whatsapp)}
