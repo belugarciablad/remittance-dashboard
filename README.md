@@ -114,4 +114,5 @@ The following features are planned for future releases:
 
 ## License
 
-[Add your license here]
+Copyright (c) 2025 Remittance Dashboard
+
