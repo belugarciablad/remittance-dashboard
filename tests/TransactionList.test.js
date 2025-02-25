@@ -39,7 +39,7 @@ describe('TransactionList Component', () => {
 
   it('Renderiza la lista con transacciones', async () => {
     const { container } = render(TransactionList);
-    
+
     // Log the complete DOM with unlimited depth
     console.log(prettyDOM(container, Infinity, { highlight: false }));
 
@@ -62,7 +62,7 @@ describe('TransactionList Component', () => {
   it('Filtra transacciones por búsqueda', async () => {
     render(TransactionList);
 
-    const searchInput = screen.getByRole('textbox'); 
+    const searchInput = screen.getByRole('textbox');
     await fireEvent.input(searchInput, { target: { value: '12345678' } });
 
     expect(screen.getByText('12345678')).toBeTruthy();

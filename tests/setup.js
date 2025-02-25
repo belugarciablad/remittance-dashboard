@@ -3,13 +3,13 @@ import { vi } from 'vitest';
 // Create a mock store function
 function createMockStore(value) {
   const subscribers = new Set();
-  
+
   return {
     subscribe(subscriber) {
       subscribers.add(subscriber);
       subscriber(value);
       return () => subscribers.delete(subscriber);
-    }
+    },
   };
 }
 
@@ -26,7 +26,7 @@ const translations = {
   'transaction.table.receiver': 'Receiver',
   'transaction.amount_sent': 'Amount Sent',
   'transaction.amount_received': 'Amount Received',
-  
+
   // Add format translations
   'transaction.format.phone': (params) => params.value,
   'transaction.format.amount': (params) => params.value,

@@ -12,10 +12,10 @@ export const formatPhoneNumber = (phone: string): string => {
 
 export const formatCurrency = (amount: number, currency: string): string => {
   const formatted = new Intl.NumberFormat('en-US', {
-    style: 'currency', 
+    style: 'currency',
     currency: currency,
     minimumFractionDigits: 0,
-    maximumFractionDigits: 2
+    maximumFractionDigits: 2,
   }).format(amount);
 
   return formatted.replace(/\.00$/, '');

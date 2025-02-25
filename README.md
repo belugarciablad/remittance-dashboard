@@ -15,6 +15,7 @@ A web application designed to allow users to track their remittance transactions
 ## API Integration
 
 This application consumes a mocked REST API hosted on MockAPI:
+
 - Base URL: `https://mockapi.io/projects/67b8f03b51192bd378dc42b1`
 - The API provides mock transaction data for development and testing purposes
 - No authentication is required for development environment
@@ -77,10 +78,12 @@ npm run test
 The following features are planned for future releases:
 
 ### Navigation & Routing
+
 - **Contacts Page**: A dedicated section to manage and view frequent remittance contacts
 - **Metrics Dashboard**: Analytics and visualization of transaction patterns and history
 
 ### User Experience
+
 - **Dark Mode**: System-wide dark theme support for better visibility in low-light conditions
 - **Onboarding Flow**: Guided introduction for new users to learn the platform's features
   - Interactive tutorials
@@ -88,8 +91,9 @@ The following features are planned for future releases:
   - Getting started guide
 
 ### Product Enhancement & User Engagement
+
 - **Transaction Repeat**: Integration with live API for quick transaction repetition
-- **Promotional Banner System**: 
+- **Promotional Banner System**:
   - Showcase new features and products
   - Display seasonal promotions
   - Highlight special exchange rates
@@ -115,4 +119,3 @@ The following features are planned for future releases:
 ## License
 
 Copyright (c) 2025 Remittance Dashboard
-

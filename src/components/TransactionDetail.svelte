@@ -65,7 +65,10 @@
           </p>
           <p>
             <strong>{$t('transaction.detail.amount_received')}</strong>
-            {formatCurrency(selectedTransaction.amount_received, selectedTransaction.currency_received)}
+            {formatCurrency(
+              selectedTransaction.amount_received,
+              selectedTransaction.currency_received
+            )}
           </p>
           <p>
             <strong>{$t('transaction.detail.exchange')}</strong>

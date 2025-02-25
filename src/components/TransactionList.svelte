@@ -208,316 +208,322 @@
 {#if !isLoading}
   {#if filteredTransactions?.length === 0}
     <EmptyState />
-  {:else}
-    {#if isDesktop}
-      <table class="min-w-full table-auto border-collapse" role="grid" aria-label={$t('list.title')}>
-        <thead>
-          <tr class="bg-gray-200">
-            <th
-              class="text-xs px-4 py-2 border text-center"
-              role="columnheader"
-              scope="col"
-              on:click={() => toggleSort('transaction_id')}
-            >
-              <span class="flex items-center justify-center">
-                <span>{$t('transaction.table.id')}</span>
-                {#if sortColumn === 'transaction_id'}
-                  {#if sortDirection === 'asc'}
-                    <ArrowDown10 size={12} class="ml-1" />
-                  {:else}
-                    <ArrowDown01 size={12} class="ml-1" />
-                  {/if}
+  {:else if isDesktop}
+    <table class="min-w-full table-auto border-collapse" role="grid" aria-label={$t('list.title')}>
+      <thead>
+        <tr class="bg-gray-200">
+          <th
+            class="text-xs px-4 py-2 border text-center"
+            role="columnheader"
+            scope="col"
+            on:click={() => toggleSort('transaction_id')}
+          >
+            <span class="flex items-center justify-center">
+              <span>{$t('transaction.table.id')}</span>
+              {#if sortColumn === 'transaction_id'}
+                {#if sortDirection === 'asc'}
+                  <ArrowDown10 size={12} class="ml-1" />
                 {:else}
-                  <ArrowDownUp size={12} class="ml-1" />
+                  <ArrowDown01 size={12} class="ml-1" />
                 {/if}
-              </span>
-            </th>
-            <th
-              class="text-xs px-8 py-2 border text-center"
-              role="columnheader"
-              scope="col"
-              on:click={() => toggleSort('sender_whatsapp')}
-            >
-              <span class="flex items-center justify-center">
-                <span>{$t('transaction.table.sender')}</span>
-                {#if sortColumn === 'sender_whatsapp'}
-                  {#if sortDirection === 'asc'}
-                    <ArrowDown10 size={12} class="ml-1" />
-                  {:else}
-                    <ArrowDown01 size={12} class="ml-1" />
-                  {/if}
-                {:else}
-                  <ArrowDownUp size={12} class="ml-1" />
-                {/if}
-              </span>
-            </th>
-            <th
-              class="text-xs px-8 py-2 border text-center"
-              role="columnheader"
-              scope="col"
-              on:click={() => toggleSort('receiver_whatsapp')}
-            >
-              <span class="flex items-center justify-center">
-                <span>{$t('transaction.table.receiver')}</span>
-                {#if sortColumn === 'receiver_whatsapp'}
-                  {#if sortDirection === 'asc'}
-                    <ArrowDown10 size={12} class="ml-1" />
-                  {:else}
-                    <ArrowDown01 size={12} class="ml-1" />
-                  {/if}
-                {:else}
-                  <ArrowDownUp size={12} class="ml-1" />
-                {/if}
-              </span>
-            </th>
-            <th
-              class="text-xs px-4 py-2 border text-center"
-              role="columnheader"
-              scope="col"
-              on:click={() => toggleSort('amount_sent')}
-            >
-              <span class="flex items-center justify-center">
-                <span>{$t('transaction.amount_sent')}</span>
-                {#if sortColumn === 'amount_sent'}
-                  {#if sortDirection === 'asc'}
-                    <ArrowDown10 size={12} class="ml-1" />
-                  {:else}
-                    <ArrowDown01 size={12} class="ml-1" />
-                  {/if}
-                {:else}
-                  <ArrowDownUp size={12} class="ml-1" />
-                {/if}
-              </span>
-            </th>
-            <th
-              class="text-xs px-4 py-2 border text-center"
-              role="columnheader"
-              scope="col"
-              on:click={() => toggleSort('amount_received')}
-            >
-              <span class="flex items-center justify-center">
-                <span>{$t('transaction.amount_received')}</span>
-                {#if sortColumn === 'amount_received'}
-                  {#if sortDirection === 'asc'}
-                    <ArrowDown10 size={12} class="ml-1" />
-                  {:else}
-                    <ArrowDown01 size={12} class="ml-1" />
-                  {/if}
-                {:else}
-                  <ArrowDownUp size={12} class="ml-1" />
-                {/if}
-              </span>
-            </th>
-            <th
-              class="text-xs px-2 py-2 border text-center"
-              role="columnheader"
-              scope="col"
-              on:click={() => toggleSort('exchange_rate')}
-            >
-              <span class="flex items-center justify-center">
-                <span>{$t('transaction.exchange_rate')}</span>
-                {#if sortColumn === 'exchange_rate'}
-                  {#if sortDirection === 'asc'}
-                    <ArrowDown10 size={12} class="ml-1" />
-                  {:else}
-                    <ArrowDown01 size={12} class="ml-1" />
-                  {/if}
-                {:else}
-                  <ArrowDownUp size={12} class="ml-1" />
-                {/if}
-              </span>
-            </th>
-            <th
-              class="text-xs px-4 py-2 border text-center"
-              role="columnheader"
-              scope="col"
-              on:click={() => toggleSort('status')}
-            >
-              <span class="flex items-center justify-center">
-                <span>{$t('transaction.table.status')}</span>
-                {#if sortColumn === 'status'}
-                  {#if sortDirection === 'asc'}
-                    <ArrowDownAZ size={12} class="ml-1" />
-                  {:else}
-                    <ArrowDownZA size={12} class="ml-1" />
-                  {/if}
-                {:else}
-                  <ArrowDownUp size={12} class="ml-1" />
-                {/if}
-              </span>
-            </th>
-            <th
-              class="text-xs px-4 py-2 border text-center"
-              role="columnheader"
-              scope="col"
-              on:click={() => toggleSort('payment_method')}
-            >
-              <span class="flex items-center justify-center">
-                <span>{$t('transaction.payment_method')}</span>
-                {#if sortColumn === 'payment_method'}
-                  {#if sortDirection === 'asc'}
-                    <ArrowDownAZ size={12} class="ml-1" />
-                  {:else}
-                    <ArrowDownZA size={12} class="ml-1" />
-                  {/if}
-                {:else}
-                  <ArrowDownUp size={12} class="ml-1" />
-                {/if}
-              </span>
-            </th>
-            <th
-              class="text-xs px-4 py-2 border text-center"
-              role="columnheader"
-              scope="col"
-              on:click={() => toggleSort('date')}
-            >
-              <span class="flex items-center justify-center">
-                <span>{$t('transaction.date')}</span>
-                {#if sortColumn === 'date'}
-                  {#if sortDirection === 'asc'}
-                    <CalendarArrowUp size={12} class="ml-1" />
-                  {:else}
-                    <CalendarArrowDown size={12} class="ml-1" />
-                  {/if}
-                {:else}
-                  <ArrowDownUp size={12} class="ml-1" />
-                {/if}
-              </span>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {#each paginatedTransactions as transaction (transaction.transaction_id)}
-            <tr
-              class="odd:bg-white even:bg-gray-50"
-              on:click={() => openDetailModal(transaction)}
-              tabindex="0"
-              on:keydown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  openDetailModal(transaction);
-                }
-              }}
-              aria-label="Transaction {transaction.transaction_id}"
-            >
-              <td class="px-4 py-2 border text-center" role="gridcell">
-                <div class="flex items-center justify-center space-x-2">
-                  <button
-                    on:click={(event) => copyToClipboard(event, transaction.transaction_id)}
-                    class="p-1 text-gray-500 hover:text-gray-700"
-                    aria-label="Copy Transaction ID {transaction.transaction_id}"
-                  >
-                    <Clipboard class="w-5 h-5" aria-hidden="true" />
-                  </button>
-                  <span class="text-sm font-medium">{transaction.transaction_id}</span>
-                </div>
-              </td>
-              <td class="px-8 py-2 border text-sm text-center" role="gridcell"
-                >{formatPhoneNumber(transaction.sender_whatsapp)}</td
-              >
-              <td class="px-8 py-2 border text-sm text-center" role="gridcell"
-                >{formatPhoneNumber(transaction.receiver_whatsapp)}</td
-              >
-              <td class="px-4 py-2 border text-center" role="gridcell"
-                >{formatCurrency(transaction.amount_sent, transaction.currency_sent)}</td
-              >
-              <td class="px-4 py-2 border text-center" role="gridcell"
-                >{formatCurrency(transaction.amount_received, transaction.currency_received)}</td
-              >
-              <td class="px-2 py-2 border text-center" role="gridcell">{transaction.exchange_rate}</td>
-              <td class="px-4 py-2 border text-center" role="gridcell">
-                <span
-                  class="w-20 h-8 text-sm rounded-md flex items-center justify-center {getColorByStatus(
-                    transaction.status
-                  )}"
-                  role="status"
-                  aria-label="Transaction status: {transaction.status}"
-                >
-                  {$t(getTranslationKey.transactionStatus(transaction.status))}
-                </span>
-              </td>
-              <td class="px-4 py-2 border text-center" role="gridcell">
-                {$t(getTranslationKey.paymentMethod(transaction.payment_method))}
-              </td>
-              <td class="px-4 py-1 border text-center whitespace-nowrap" role="gridcell">
-                <div class="flex flex-col items-center gap-0.5">
-                  <span class="text-sm whitespace-nowrap">{new Date(transaction.date).toLocaleDateString()}</span>
-                  <span class="text-xs text-gray-500 whitespace-nowrap">{new Date(transaction.date).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})}</span>
-                </div>
-              </td>
-            </tr>
-          {/each}
-        </tbody>
-      </table>
-    {:else}
-      {#each paginatedTransactions as transaction (transaction.transaction_id)}
-        <div
-          class="w-full text-left bg-white shadow-md rounded-lg p-4 mb-4 cursor-pointer"
-          on:click={() => openDetailModal(transaction)}
-          aria-label="Transaction card"
-          role="button"
-          tabindex="0"
-          on:keydown={(event) => event.key === 'Enter' && openDetailModal(transaction)}
-        >
-          <div class="flex justify-between items-center mb-2">
-            <div class="flex items-center space-x-2">
-              <button
-                on:click={(event) => copyToClipboard(event, transaction.transaction_id)}
-                class="p-1 text-gray-500 hover:text-gray-700"
-                aria-label="Copy Transaction ID"
-              >
-                <Clipboard class="w-5 h-5" />
-              </button>
-              <span class="text-sm font-medium">{transaction.transaction_id}</span>
-            </div>
-            <span
-              class="px-3 py-1 text-xs rounded-md font-semibold {getColorByStatus(
-                transaction.status
-              )}"
-            >
-              {$t(getTranslationKey.transactionStatus(transaction.status))}
+              {:else}
+                <ArrowDownUp size={12} class="ml-1" />
+              {/if}
             </span>
-          </div>
-
-          <div class="grid grid-cols-2 gap-2 text-sm text-gray-600">
-            <div>
-              <span class="font-semibold">{$t('transaction.table.sender')}:</span>
-              {formatPhoneNumber(transaction.sender_whatsapp)}
-            </div>
-            <div>
-              <span class="font-semibold">{$t('transaction.table.receiver')}:</span>
-              {formatPhoneNumber(transaction.receiver_whatsapp)}
-            </div>
-            <div>
-              <span class="font-semibold">{$t('transaction.amount_sent')}:</span>
-              {formatCurrency(transaction.amount_sent, transaction.currency_sent)}
-            </div>
-            <div>
-              <span class="font-semibold">{$t('transaction.amount_received')}:</span>
-              {formatCurrency(transaction.amount_received, transaction.currency_received)}
-            </div>
-            <div>
-              <span class="font-semibold">{$t('transaction.exchange_rate')}:</span>
-              {transaction.exchange_rate}
-            </div>
-            <div>
-              <span class="font-semibold">{$t('transaction.payment_method')}:</span>
+          </th>
+          <th
+            class="text-xs px-8 py-2 border text-center"
+            role="columnheader"
+            scope="col"
+            on:click={() => toggleSort('sender_whatsapp')}
+          >
+            <span class="flex items-center justify-center">
+              <span>{$t('transaction.table.sender')}</span>
+              {#if sortColumn === 'sender_whatsapp'}
+                {#if sortDirection === 'asc'}
+                  <ArrowDown10 size={12} class="ml-1" />
+                {:else}
+                  <ArrowDown01 size={12} class="ml-1" />
+                {/if}
+              {:else}
+                <ArrowDownUp size={12} class="ml-1" />
+              {/if}
+            </span>
+          </th>
+          <th
+            class="text-xs px-8 py-2 border text-center"
+            role="columnheader"
+            scope="col"
+            on:click={() => toggleSort('receiver_whatsapp')}
+          >
+            <span class="flex items-center justify-center">
+              <span>{$t('transaction.table.receiver')}</span>
+              {#if sortColumn === 'receiver_whatsapp'}
+                {#if sortDirection === 'asc'}
+                  <ArrowDown10 size={12} class="ml-1" />
+                {:else}
+                  <ArrowDown01 size={12} class="ml-1" />
+                {/if}
+              {:else}
+                <ArrowDownUp size={12} class="ml-1" />
+              {/if}
+            </span>
+          </th>
+          <th
+            class="text-xs px-4 py-2 border text-center"
+            role="columnheader"
+            scope="col"
+            on:click={() => toggleSort('amount_sent')}
+          >
+            <span class="flex items-center justify-center">
+              <span>{$t('transaction.amount_sent')}</span>
+              {#if sortColumn === 'amount_sent'}
+                {#if sortDirection === 'asc'}
+                  <ArrowDown10 size={12} class="ml-1" />
+                {:else}
+                  <ArrowDown01 size={12} class="ml-1" />
+                {/if}
+              {:else}
+                <ArrowDownUp size={12} class="ml-1" />
+              {/if}
+            </span>
+          </th>
+          <th
+            class="text-xs px-4 py-2 border text-center"
+            role="columnheader"
+            scope="col"
+            on:click={() => toggleSort('amount_received')}
+          >
+            <span class="flex items-center justify-center">
+              <span>{$t('transaction.amount_received')}</span>
+              {#if sortColumn === 'amount_received'}
+                {#if sortDirection === 'asc'}
+                  <ArrowDown10 size={12} class="ml-1" />
+                {:else}
+                  <ArrowDown01 size={12} class="ml-1" />
+                {/if}
+              {:else}
+                <ArrowDownUp size={12} class="ml-1" />
+              {/if}
+            </span>
+          </th>
+          <th
+            class="text-xs px-2 py-2 border text-center"
+            role="columnheader"
+            scope="col"
+            on:click={() => toggleSort('exchange_rate')}
+          >
+            <span class="flex items-center justify-center">
+              <span>{$t('transaction.exchange_rate')}</span>
+              {#if sortColumn === 'exchange_rate'}
+                {#if sortDirection === 'asc'}
+                  <ArrowDown10 size={12} class="ml-1" />
+                {:else}
+                  <ArrowDown01 size={12} class="ml-1" />
+                {/if}
+              {:else}
+                <ArrowDownUp size={12} class="ml-1" />
+              {/if}
+            </span>
+          </th>
+          <th
+            class="text-xs px-4 py-2 border text-center"
+            role="columnheader"
+            scope="col"
+            on:click={() => toggleSort('status')}
+          >
+            <span class="flex items-center justify-center">
+              <span>{$t('transaction.table.status')}</span>
+              {#if sortColumn === 'status'}
+                {#if sortDirection === 'asc'}
+                  <ArrowDownAZ size={12} class="ml-1" />
+                {:else}
+                  <ArrowDownZA size={12} class="ml-1" />
+                {/if}
+              {:else}
+                <ArrowDownUp size={12} class="ml-1" />
+              {/if}
+            </span>
+          </th>
+          <th
+            class="text-xs px-4 py-2 border text-center"
+            role="columnheader"
+            scope="col"
+            on:click={() => toggleSort('payment_method')}
+          >
+            <span class="flex items-center justify-center">
+              <span>{$t('transaction.payment_method')}</span>
+              {#if sortColumn === 'payment_method'}
+                {#if sortDirection === 'asc'}
+                  <ArrowDownAZ size={12} class="ml-1" />
+                {:else}
+                  <ArrowDownZA size={12} class="ml-1" />
+                {/if}
+              {:else}
+                <ArrowDownUp size={12} class="ml-1" />
+              {/if}
+            </span>
+          </th>
+          <th
+            class="text-xs px-4 py-2 border text-center"
+            role="columnheader"
+            scope="col"
+            on:click={() => toggleSort('date')}
+          >
+            <span class="flex items-center justify-center">
+              <span>{$t('transaction.date')}</span>
+              {#if sortColumn === 'date'}
+                {#if sortDirection === 'asc'}
+                  <CalendarArrowUp size={12} class="ml-1" />
+                {:else}
+                  <CalendarArrowDown size={12} class="ml-1" />
+                {/if}
+              {:else}
+                <ArrowDownUp size={12} class="ml-1" />
+              {/if}
+            </span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {#each paginatedTransactions as transaction (transaction.transaction_id)}
+          <tr
+            class="odd:bg-white even:bg-gray-50"
+            on:click={() => openDetailModal(transaction)}
+            tabindex="0"
+            on:keydown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                openDetailModal(transaction);
+              }
+            }}
+            aria-label="Transaction {transaction.transaction_id}"
+          >
+            <td class="px-4 py-2 border text-center" role="gridcell">
+              <div class="flex items-center justify-center space-x-2">
+                <button
+                  on:click={(event) => copyToClipboard(event, transaction.transaction_id)}
+                  class="p-1 text-gray-500 hover:text-gray-700"
+                  aria-label="Copy Transaction ID {transaction.transaction_id}"
+                >
+                  <Clipboard class="w-5 h-5" aria-hidden="true" />
+                </button>
+                <span class="text-sm font-medium">{transaction.transaction_id}</span>
+              </div>
+            </td>
+            <td class="px-8 py-2 border text-sm text-center" role="gridcell"
+              >{formatPhoneNumber(transaction.sender_whatsapp)}</td
+            >
+            <td class="px-8 py-2 border text-sm text-center" role="gridcell"
+              >{formatPhoneNumber(transaction.receiver_whatsapp)}</td
+            >
+            <td class="px-4 py-2 border text-center" role="gridcell"
+              >{formatCurrency(transaction.amount_sent, transaction.currency_sent)}</td
+            >
+            <td class="px-4 py-2 border text-center" role="gridcell"
+              >{formatCurrency(transaction.amount_received, transaction.currency_received)}</td
+            >
+            <td class="px-2 py-2 border text-center" role="gridcell">{transaction.exchange_rate}</td
+            >
+            <td class="px-4 py-2 border text-center" role="gridcell">
+              <span
+                class="w-20 h-8 text-sm rounded-md flex items-center justify-center {getColorByStatus(
+                  transaction.status
+                )}"
+                role="status"
+                aria-label="Transaction status: {transaction.status}"
+              >
+                {$t(getTranslationKey.transactionStatus(transaction.status))}
+              </span>
+            </td>
+            <td class="px-4 py-2 border text-center" role="gridcell">
               {$t(getTranslationKey.paymentMethod(transaction.payment_method))}
-            </div>
-            <div class="col-span-2">
-              <span class="font-semibold">{$t('transaction.date')}:</span>
-              {new Date(transaction.date).toLocaleString([], {
-                year: 'numeric',
-                month: 'numeric',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-              })}
-            </div>
+            </td>
+            <td class="px-4 py-1 border text-center whitespace-nowrap" role="gridcell">
+              <div class="flex flex-col items-center gap-0.5">
+                <span class="text-sm whitespace-nowrap"
+                  >{new Date(transaction.date).toLocaleDateString()}</span
+                >
+                <span class="text-xs text-gray-500 whitespace-nowrap"
+                  >{new Date(transaction.date).toLocaleTimeString([], {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  })}</span
+                >
+              </div>
+            </td>
+          </tr>
+        {/each}
+      </tbody>
+    </table>
+  {:else}
+    {#each paginatedTransactions as transaction (transaction.transaction_id)}
+      <div
+        class="w-full text-left bg-white shadow-md rounded-lg p-4 mb-4 cursor-pointer"
+        on:click={() => openDetailModal(transaction)}
+        aria-label="Transaction card"
+        role="button"
+        tabindex="0"
+        on:keydown={(event) => event.key === 'Enter' && openDetailModal(transaction)}
+      >
+        <div class="flex justify-between items-center mb-2">
+          <div class="flex items-center space-x-2">
+            <button
+              on:click={(event) => copyToClipboard(event, transaction.transaction_id)}
+              class="p-1 text-gray-500 hover:text-gray-700"
+              aria-label="Copy Transaction ID"
+            >
+              <Clipboard class="w-5 h-5" />
+            </button>
+            <span class="text-sm font-medium">{transaction.transaction_id}</span>
+          </div>
+          <span
+            class="px-3 py-1 text-xs rounded-md font-semibold {getColorByStatus(
+              transaction.status
+            )}"
+          >
+            {$t(getTranslationKey.transactionStatus(transaction.status))}
+          </span>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2 text-sm text-gray-600">
+          <div>
+            <span class="font-semibold">{$t('transaction.table.sender')}:</span>
+            {formatPhoneNumber(transaction.sender_whatsapp)}
+          </div>
+          <div>
+            <span class="font-semibold">{$t('transaction.table.receiver')}:</span>
+            {formatPhoneNumber(transaction.receiver_whatsapp)}
+          </div>
+          <div>
+            <span class="font-semibold">{$t('transaction.amount_sent')}:</span>
+            {formatCurrency(transaction.amount_sent, transaction.currency_sent)}
+          </div>
+          <div>
+            <span class="font-semibold">{$t('transaction.amount_received')}:</span>
+            {formatCurrency(transaction.amount_received, transaction.currency_received)}
+          </div>
+          <div>
+            <span class="font-semibold">{$t('transaction.exchange_rate')}:</span>
+            {transaction.exchange_rate}
+          </div>
+          <div>
+            <span class="font-semibold">{$t('transaction.payment_method')}:</span>
+            {$t(getTranslationKey.paymentMethod(transaction.payment_method))}
+          </div>
+          <div class="col-span-2">
+            <span class="font-semibold">{$t('transaction.date')}:</span>
+            {new Date(transaction.date).toLocaleString([], {
+              year: 'numeric',
+              month: 'numeric',
+              day: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit',
+            })}
           </div>
         </div>
-      {/each}
-    {/if}
+      </div>
+    {/each}
   {/if}
 {:else}
   <Skeleton {itemsPerPage} />

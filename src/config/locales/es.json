@@ -21,7 +21,7 @@
     "apply": "Aplicar filtros",
     "title": "Filtros",
     "appliedFilters": "Aplicados",
-    "paymentMethod": "Método de Pago", 
+    "paymentMethod": "Método de Pago",
     "dateRange": "Rango de Fechas"
   },
   "transaction": {

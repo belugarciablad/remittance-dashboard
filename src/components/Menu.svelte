@@ -52,9 +52,8 @@
         <span>{$t('menu.metrics')}</span>
       </a>
       <div class="px-4 py-2 border-t">
-        <Locale onclose={() => isOpen = false} />
+        <Locale onclose={() => (isOpen = false)} />
       </div>
     </div>
   {/if}
 </div>
-

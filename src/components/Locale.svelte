@@ -15,13 +15,12 @@
   const onclick = (e: MouseEvent) => e.stopPropagation();
 </script>
 
-<div 
-  class="relative inline-flex items-center"
-  {onclick}
-  role="presentation"
->
+<div class="relative inline-flex items-center" {onclick} role="presentation">
   <button
-    onclick={(e: MouseEvent) => { e.stopPropagation(); selectElement.click(); }}
+    onclick={(e: MouseEvent) => {
+      e.stopPropagation();
+      selectElement.click();
+    }}
     class="absolute left-2 z-10 text-gray-500 hover:text-gray-700 transition-colors"
     aria-label={$t('locale.select')}
   >
