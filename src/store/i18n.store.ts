@@ -13,7 +13,7 @@ init({
   isLocaleLoaded.set(true);
 });
 
-const setLocale = (lang) => {
+const setLocale = (lang: string) => {
   localStorage.setItem('locale', lang);
   locale.set(lang);
 };

@@ -8,8 +8,8 @@
   import { TransactionStatus, PaymentMethod } from '../types/transaction-model.type';
   import { currentPage, itemsPerPage } from '../store/table-pagination-config.store';
   import { DateRangesEnum } from '../types/date-ranges-type';
-  import { getColorByStatus } from '../util/status-color-util';
-  import { formatPhoneNumber } from '../util/format.util';
+  import { getColorByStatus } from '../util/status-color.util';
+  import { formatPhoneNumber, formatCurrency } from '../util/format.util';
   import TransactionDetail from './TransactionDetail.svelte';
   import Filter from './Filter.svelte';
   import Pagination from './Pagination.svelte';
@@ -25,7 +25,7 @@
     ArrowDownZA,
   } from 'lucide-svelte';
   import { screen } from '../store/screen-size.store';
-  import { filterDate } from '../util/date-util';
+  import { filterDate } from '../util/date.util';
   import { onMount, tick } from 'svelte';
   import { t } from 'svelte-i18n';
   import { getTranslationKey } from '../util/translations-maps.util';
@@ -210,12 +210,12 @@
       <thead>
         <tr class="bg-gray-200">
           <th
-            class="text-xs px-4 py-2 border text-left"
+            class="text-xs px-4 py-2 border text-center"
             role="columnheader"
             scope="col"
             on:click={() => toggleSort('transaction_id')}
           >
-            <span class="flex items-center">
+            <span class="flex items-center justify-center">
               <span>{$t('transaction.table.id')}</span>
               {#if sortColumn === 'transaction_id'}
                 {#if sortDirection === 'asc'}
@@ -229,12 +229,12 @@
             </span>
           </th>
           <th
-            class="text-xs px-8 py-2 border text-left"
+            class="text-xs px-8 py-2 border text-center"
             role="columnheader"
             scope="col"
             on:click={() => toggleSort('sender_whatsapp')}
           >
-            <span class="flex items-center">
+            <span class="flex items-center justify-center">
               <span>{$t('transaction.table.sender')}</span>
               {#if sortColumn === 'sender_whatsapp'}
                 {#if sortDirection === 'asc'}
@@ -248,12 +248,12 @@
             </span>
           </th>
           <th
-            class="text-xs px-8 py-2 border text-left"
+            class="text-xs px-8 py-2 border text-center"
             role="columnheader"
             scope="col"
             on:click={() => toggleSort('receiver_whatsapp')}
           >
-            <span class="flex items-center">
+            <span class="flex items-center justify-center">
               <span>{$t('transaction.table.receiver')}</span>
               {#if sortColumn === 'receiver_whatsapp'}
                 {#if sortDirection === 'asc'}
@@ -267,12 +267,12 @@
             </span>
           </th>
           <th
-            class="text-xs px-4 py-2 border text-left"
+            class="text-xs px-4 py-2 border text-center"
             role="columnheader"
             scope="col"
             on:click={() => toggleSort('amount_sent')}
           >
-            <span class="flex items-center">
+            <span class="flex items-center justify-center">
               <span>{$t('transaction.amount_sent')}</span>
               {#if sortColumn === 'amount_sent'}
                 {#if sortDirection === 'asc'}
@@ -286,12 +286,12 @@
             </span>
           </th>
           <th
-            class="text-xs px-4 py-2 border text-left"
+            class="text-xs px-4 py-2 border text-center"
             role="columnheader"
             scope="col"
             on:click={() => toggleSort('amount_received')}
           >
-            <span class="flex items-center">
+            <span class="flex items-center justify-center">
               <span>{$t('transaction.amount_received')}</span>
               {#if sortColumn === 'amount_received'}
                 {#if sortDirection === 'asc'}
@@ -305,12 +305,12 @@
             </span>
           </th>
           <th
-            class="text-xs px-2 py-2 border text-left"
+            class="text-xs px-2 py-2 border text-center"
             role="columnheader"
             scope="col"
             on:click={() => toggleSort('exchange_rate')}
           >
-            <span class="flex items-center">
+            <span class="flex items-center justify-center">
               <span>{$t('transaction.exchange_rate')}</span>
               {#if sortColumn === 'exchange_rate'}
                 {#if sortDirection === 'asc'}
@@ -324,12 +324,12 @@
             </span>
           </th>
           <th
-            class="text-xs px-4 py-2 border text-left"
+            class="text-xs px-4 py-2 border text-center"
             role="columnheader"
             scope="col"
             on:click={() => toggleSort('status')}
           >
-            <span class="flex items-center">
+            <span class="flex items-center justify-center">
               <span>{$t('transaction.table.status')}</span>
               {#if sortColumn === 'status'}
                 {#if sortDirection === 'asc'}
@@ -343,12 +343,12 @@
             </span>
           </th>
           <th
-            class="text-xs px-4 py-2 border text-left"
+            class="text-xs px-4 py-2 border text-center"
             role="columnheader"
             scope="col"
             on:click={() => toggleSort('payment_method')}
           >
-            <span class="flex items-center">
+            <span class="flex items-center justify-center">
               <span>{$t('transaction.payment_method')}</span>
               {#if sortColumn === 'payment_method'}
                 {#if sortDirection === 'asc'}
@@ -362,12 +362,12 @@
             </span>
           </th>
           <th
-            class="text-xs px-4 py-2 border text-left"
+            class="text-xs px-4 py-2 border text-center"
             role="columnheader"
             scope="col"
             on:click={() => toggleSort('date')}
           >
-            <span class="flex items-center">
+            <span class="flex items-center justify-center">
               <span>{$t('transaction.date')}</span>
               {#if sortColumn === 'date'}
                 {#if sortDirection === 'asc'}
@@ -396,8 +396,8 @@
             }}
             aria-label="Transaction {transaction.transaction_id}"
           >
-            <td class="px-4 py-2 border" role="gridcell">
-              <div class="flex items-center space-x-2">
+            <td class="px-4 py-2 border text-center" role="gridcell">
+              <div class="flex items-center justify-center space-x-2">
                 <button
                   on:click={(event) => copyToClipboard(event, transaction.transaction_id)}
                   class="p-1 text-gray-500 hover:text-gray-700"
@@ -408,20 +408,20 @@
                 <span class="text-sm font-medium">{transaction.transaction_id}</span>
               </div>
             </td>
-            <td class="px-8 py-2 border text-sm" role="gridcell"
+            <td class="px-8 py-2 border text-sm text-center" role="gridcell"
               >{formatPhoneNumber(transaction.sender_whatsapp)}</td
             >
-            <td class="px-8 py-2 border text-sm" role="gridcell"
+            <td class="px-8 py-2 border text-sm text-center" role="gridcell"
               >{formatPhoneNumber(transaction.receiver_whatsapp)}</td
             >
-            <td class="px-4 py-2 border" role="gridcell"
-              >{transaction.amount_sent} {transaction.currency_sent}</td
+            <td class="px-4 py-2 border text-center" role="gridcell"
+              >{formatCurrency(transaction.amount_sent, transaction.currency_sent)}</td
             >
-            <td class="px-4 py-2 border" role="gridcell"
-              >{transaction.amount_received} {transaction.currency_received}</td
+            <td class="px-4 py-2 border text-center" role="gridcell"
+              >{formatCurrency(transaction.amount_received, transaction.currency_received)}</td
             >
-            <td class="px-2 py-2 border" role="gridcell">{transaction.exchange_rate}</td>
-            <td class="px-4 py-2 border" role="gridcell">
+            <td class="px-2 py-2 border text-center" role="gridcell">{transaction.exchange_rate}</td>
+            <td class="px-4 py-2 border text-center" role="gridcell">
               <span
                 class="w-20 h-8 text-sm rounded-md flex items-center justify-center {getColorByStatus(
                   transaction.status
@@ -432,10 +432,10 @@
                 {$t(getTranslationKey.transactionStatus(transaction.status))}
               </span>
             </td>
-            <td class="px-4 py-2 border" role="gridcell">
+            <td class="px-4 py-2 border text-center" role="gridcell">
               {$t(getTranslationKey.paymentMethod(transaction.payment_method))}
             </td>
-            <td class="px-4 py-2 border" role="gridcell"
+            <td class="px-4 py-2 border text-center" role="gridcell"
               >{new Date(transaction.date).toLocaleString()}</td
             >
           </tr>
@@ -483,13 +483,11 @@
           </div>
           <div>
             <span class="font-semibold">{$t('transaction.amount_sent')}:</span>
-            {transaction.amount_sent}
-            {transaction.currency_sent}
+            {formatCurrency(transaction.amount_sent, transaction.currency_sent)}
           </div>
           <div>
             <span class="font-semibold">{$t('transaction.amount_received')}:</span>
-            {transaction.amount_received}
-            {transaction.currency_received}
+            {formatCurrency(transaction.amount_received, transaction.currency_received)}
           </div>
           <div>
             <span class="font-semibold">{$t('transaction.exchange_rate')}:</span>

@@ -1,8 +1,14 @@
 <script lang="ts">
   import { locale, locales, t } from 'svelte-i18n';
   import { Languages } from 'lucide-svelte';
+  import { i18nStore } from '../store/i18n.store';
 
   let selectElement: HTMLSelectElement;
+
+  function handleLocaleChange(event: Event) {
+    const target = event.target as HTMLSelectElement;
+    i18nStore.setLocale(target.value);
+  }
 </script>
 
 <div class="relative inline-flex items-center">
@@ -15,12 +21,13 @@
   </button>
   <select
     bind:this={selectElement}
-    bind:value={$locale}
+    value={$locale}
+    on:change={handleLocaleChange}
     name={$t('locale.select')}
-    class="appearance-none w-full pl-10 pr-8 py-2 bg-white border border-gray-300 rounded-lg
+    class="appearance-none pl-10 pr-8 py-2 bg-white border border-gray-300 rounded-lg
                text-gray-700 font-medium cursor-pointer hover:border-gray-400
                focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
-               transition-colors"
+               transition-colors text-sm"
   >
     {#each $locales as locale}
       <option value={locale} class="px-4 py-2 hover:bg-gray-100 cursor-pointer text-base">

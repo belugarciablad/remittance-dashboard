@@ -1,8 +1,8 @@
 <script lang="ts">
   import { t } from 'svelte-i18n';
   import type { Transaction } from '../types/transaction-model.type';
-  import { formatPhoneNumber } from '../util/format.util';
-  import { getColorByStatus } from '../util/status-color-util';
+  import { formatPhoneNumber, formatCurrency } from '../util/format.util';
+  import { getColorByStatus } from '../util/status-color.util';
   import { Download, Repeat } from 'lucide-svelte';
   import { downloadDetail, repeatTransaction } from '../util/transaction-detail.util';
   import { getTranslationKey } from '../util/translations-maps.util';
@@ -61,13 +61,11 @@
           </p>
           <p>
             <strong>{$t('transaction.detail.amount_sent')}</strong>
-            {selectedTransaction.amount_sent}
-            {selectedTransaction.currency_sent}
+            {formatCurrency(selectedTransaction.amount_sent, selectedTransaction.currency_sent)}
           </p>
           <p>
             <strong>{$t('transaction.detail.amount_received')}</strong>
-            {selectedTransaction.amount_received}
-            {selectedTransaction.currency_received}
+            {formatCurrency(selectedTransaction.amount_received, selectedTransaction.currency_received)}
           </p>
           <p>
             <strong>{$t('transaction.detail.exchange')}</strong>

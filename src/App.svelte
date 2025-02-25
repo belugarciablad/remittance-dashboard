@@ -2,7 +2,7 @@
   import Locale from './components/Locale.svelte';
   import TransactionList from './components/TransactionList.svelte';
   import { t } from 'svelte-i18n';
-  import { i18nStore } from './store/i18n';
+  import { i18nStore } from './store/i18n.store';
 
   let isLocaleLoaded = false;
   $: $i18nStore && (isLocaleLoaded = true);

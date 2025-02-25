@@ -9,3 +9,14 @@ export const formatPhoneNumber = (phone: string): string => {
 
   return `${countryCode}${formatted}`;
 };
+
+export const formatCurrency = (amount: number, currency: string): string => {
+  const formatted = new Intl.NumberFormat('en-US', {
+    style: 'currency', 
+    currency: currency,
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2
+  }).format(amount);
+
+  return formatted.replace(/\.00$/, '');
+};
