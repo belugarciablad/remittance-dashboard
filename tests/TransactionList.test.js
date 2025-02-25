@@ -1,7 +1,7 @@
 import { render, fireEvent, screen } from '@testing-library/svelte';
 import TransactionList from '../src/components/TransactionList.svelte';
 import { transactions } from '../src/store/transactions.store';
-import { beforeEach, describe, it, expect } from 'vitest'; 
+import { beforeEach, describe, it, expect } from 'vitest';
 
 // Mock de datos
 const mockTransactions = [
@@ -42,12 +42,12 @@ describe('TransactionList Component', () => {
     expect(screen.getAllByText('Amount Received:')).toBeTruthy();
 
     // Verifica si las transacciones aparecen en la tabla
-    expect(screen.getByText('12345678')).toBeTruthy(); 
+    expect(screen.getByText('12345678')).toBeTruthy();
     expect(screen.getByText('100')).toBeTruthy();
     expect(screen.getByText('95')).toBeTruthy();
     expect(screen.getAllByText('Completed')).toBeTruthy();
 
-    expect(screen.getByText('999999')).toBeTruthy(); 
+    expect(screen.getByText('999999')).toBeTruthy();
     expect(screen.getByText('50')).toBeTruthy();
     expect(screen.getByText('47')).toBeTruthy();
     expect(screen.getAllByText('Pending')).toBeTruthy();

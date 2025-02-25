@@ -1,5 +1,5 @@
 import { init, register, locale, getLocaleFromNavigator } from 'svelte-i18n';
-import { writable } from 'svelte/store'
+import { writable } from 'svelte/store';
 
 const isLocaleLoaded = writable(false);
 
@@ -16,9 +16,9 @@ init({
 const setLocale = (lang) => {
   localStorage.setItem('locale', lang);
   locale.set(lang);
-}
+};
 
 export const i18nStore = {
   subscribe: isLocaleLoaded.subscribe,
-  setLocale
+  setLocale,
 };

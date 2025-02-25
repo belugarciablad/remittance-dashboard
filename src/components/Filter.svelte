@@ -14,7 +14,10 @@
   export let dateRangeFilter: DateRangesEnum = DateRangesEnum.All;
   export let updateStatusCheckbox: (statuses: TransactionStatus[]) => void;
   export let removeAllFilters: () => void;
-  export let applyModalFilters: (daterange?: DateRangesEnum, paymentMethods?: PaymentMethod[]) => void;
+  export let applyModalFilters: (
+    daterange?: DateRangesEnum,
+    paymentMethods?: PaymentMethod[]
+  ) => void;
 
   let isFilterModalOpen = false;
 
@@ -28,7 +31,7 @@
       : [...selectedStatuses, status];
     updateStatusCheckbox(selectedStatuses);
   };
-  
+
   const openFilterModal = () => {
     isFilterModalOpen = true;
   };
@@ -36,24 +39,23 @@
   const closeFilterModal = () => {
     isFilterModalOpen = false;
   };
-
 </script>
 
 <div class="filters mb-4 flex flex-col sm:flex-row justify-center sm:gap-40">
-    <div class="first-row flex items-start justify-center w-full gap-2">
-        <div class="flex-grow">
-            <SearchBar {searchQuery} {updateSearchQuery} />
-        </div>
-        <button
-        on:click={openFilterModal}
-        class="px-3 py-1.5 h-10 w-auto text-sm text-gray-600 hover:text-white bg-gray-200 hover:bg-gray-400 border border-gray-300 rounded-md shadow-sm transition-colors duration-200 ease-in-out"
-        aria-label="Toggle filters"
-         >
-            <div class="flex items-center gap-2">
-            <FilterIcon size={16} />
-            </div>
-        </button>
+  <div class="first-row flex items-start justify-center w-full gap-2">
+    <div class="flex-grow">
+      <SearchBar {searchQuery} {updateSearchQuery} />
     </div>
+    <button
+      on:click={openFilterModal}
+      class="px-3 py-1.5 h-10 w-auto text-sm text-gray-600 hover:text-white bg-gray-200 hover:bg-gray-400 border border-gray-300 rounded-md shadow-sm transition-colors duration-200 ease-in-out"
+      aria-label="Toggle filters"
+    >
+      <div class="flex items-center gap-2">
+        <FilterIcon size={16} />
+      </div>
+    </button>
+  </div>
 
   <div class="status-filter mb-4 sm:mb-0">
     <div class="flex sm:flex sm:space-x-5 items-center justify-center">
@@ -74,15 +76,15 @@
       {/each}
     </div>
   </div>
-    
-    {#if isFilterModalOpen}
-     <FilterModal 
-        {selectedPaymentMethods}
-        {dateRangeFilter} 
-        {selectedStatuses}
-        {removeAllFilters}
-        {applyModalFilters} 
-        {closeFilterModal}/>
-    {/if}
+
+  {#if isFilterModalOpen}
+    <FilterModal
+      {selectedPaymentMethods}
+      {dateRangeFilter}
+      {selectedStatuses}
+      {removeAllFilters}
+      {applyModalFilters}
+      {closeFilterModal}
+    />
+  {/if}
 </div>
-    

@@ -13,8 +13,8 @@ export default defineConfig({
     globals: true,
   },
   resolve: process.env.VITEST
-		? {
-				conditions: ['browser']
-			}
-		: undefined
+    ? {
+        conditions: ['browser'],
+      }
+    : undefined,
 });

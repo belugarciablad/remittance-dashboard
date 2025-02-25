@@ -1,12 +1,16 @@
 <script lang="ts">
-    import { t } from 'svelte-i18n';
-    import { screen } from '../store/screen-size.store';
-    export const itemsPerPage: Number = 5;
-    const isDesktop = screen.isDesktop();
-  </script>
+  import { t } from 'svelte-i18n';
+  import { screen } from '../store/screen-size.store';
+  export const itemsPerPage: Number = 5;
+  const isDesktop = screen.isDesktop();
+</script>
 
 {#if isDesktop}
-  <table class="min-w-full table-auto border-collapse animate-pulse" role="grid" aria-label="Transactions - Skeleton">
+  <table
+    class="min-w-full table-auto border-collapse animate-pulse"
+    role="grid"
+    aria-label="Transactions - Skeleton"
+  >
     <thead>
       <tr class="bg-gray-200">
         <th class="px-4 py-2 border text-left" role="columnheader" scope="col">

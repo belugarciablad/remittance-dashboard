@@ -15,7 +15,8 @@
   </button>
 
   <span class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm">
-    {$t('pagination.page')} <strong class="text-gray-900">{$currentPage}</strong> {$t('transaction.of')}
+    {$t('pagination.page')} <strong class="text-gray-900">{$currentPage}</strong>
+    {$t('transaction.of')}
     <strong class="text-gray-900">{totalPages}</strong>
   </span>
 

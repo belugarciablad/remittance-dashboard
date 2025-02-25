@@ -2,17 +2,17 @@
   import Locale from './components/Locale.svelte';
   import TransactionList from './components/TransactionList.svelte';
   import { t } from 'svelte-i18n';
-  import { i18nStore } from './store/i18n'
+  import { i18nStore } from './store/i18n';
 
   let isLocaleLoaded = false;
   $: $i18nStore && (isLocaleLoaded = true);
 </script>
 
-{#if isLocaleLoaded }
+{#if isLocaleLoaded}
   <div class="h-full min-h-screen bg-gray-100 flex flex-col touch-pan-y">
     <header class="bg-blue-600 text-white p-4 flex-shrink-0 flex items-center justify-between">
       <h1 class="text-3xl font-bold">{$t('header.remittance-dashboard')}</h1>
-      <Locale/>
+      <Locale />
     </header>
 
     <main class="flex-1 p-6 overflow-y-auto overscroll-contain">
@@ -27,5 +27,5 @@
     </footer>
   </div>
 {:else}
-  <img src="./assets/logo.svg" alt="Felix Loader">
+  <img src="./assets/logo.svg" alt="Felix Loader" />
 {/if}

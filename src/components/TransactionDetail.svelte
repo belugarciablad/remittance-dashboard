@@ -42,7 +42,7 @@
                   selectedTransaction.status
                 )}"
               >
-                {$t(getTranslationKey.transactionStatus(selectedTransaction.status))}   
+                {$t(getTranslationKey.transactionStatus(selectedTransaction.status))}
               </span>
             </p>
           </div>
@@ -55,16 +55,24 @@
             <strong>{$t('transaction.detail.receiver')}</strong>
             {formatPhoneNumber(selectedTransaction.receiver_whatsapp)}
           </p>
-          <p><strong>{$t('transaction.detail.method')}</strong> {$t(getTranslationKey.paymentMethod(selectedTransaction.payment_method))}</p>
-          <p><strong>{$t('transaction.detail.amount_sent')}</strong>
-             {selectedTransaction.amount_sent}
-             {selectedTransaction.currency_sent}
+          <p>
+            <strong>{$t('transaction.detail.method')}</strong>
+            {$t(getTranslationKey.paymentMethod(selectedTransaction.payment_method))}
           </p>
-          <p><strong>{$t('transaction.detail.amount_received')}</strong>
-              {selectedTransaction.amount_received}
-              {selectedTransaction.currency_received}
+          <p>
+            <strong>{$t('transaction.detail.amount_sent')}</strong>
+            {selectedTransaction.amount_sent}
+            {selectedTransaction.currency_sent}
           </p>
-          <p><strong>{$t('transaction.detail.exchange')}</strong> {selectedTransaction.exchange_rate}</p>
+          <p>
+            <strong>{$t('transaction.detail.amount_received')}</strong>
+            {selectedTransaction.amount_received}
+            {selectedTransaction.currency_received}
+          </p>
+          <p>
+            <strong>{$t('transaction.detail.exchange')}</strong>
+            {selectedTransaction.exchange_rate}
+          </p>
         </div>
         <div class="buttons flex justify-between w-full">
           <button
