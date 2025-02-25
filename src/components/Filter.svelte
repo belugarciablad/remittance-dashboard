@@ -41,7 +41,7 @@
   };
 </script>
 
-<div class="filters mb-4 flex flex-col sm:flex-row justify-center sm:gap-40">
+<div class="filters mb-4 flex flex-col lg:flex-row justify-center lg:gap-40">
   <div class="first-row flex items-start justify-center w-full gap-2">
         <div class="flex-grow">
         <SearchBar {searchQuery} {updateSearchQuery} />
